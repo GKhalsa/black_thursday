@@ -44,10 +44,12 @@ class MerchantRepositoryTest < Minitest::Test
     name_1 = "OneLovePhotographyIN"
     name_2 = "ForTheLoveOfCop"
     name_3 = "DivineLoveSigrun"
-    assert_equal 3, mr.find_all_by_name("elo").count
-    assert_equal name_1, mr.find_all_by_name("elo")[0].name
-    assert_equal name_2, mr.find_all_by_name("elo")[1].name
-    assert_equal name_3, mr.find_all_by_name("elo")[2].name
+    assert_equal 3, mr.find_all_by_name("elO").count
+    assert_equal name_1, mr.find_all_by_name("Elo")[0].name
+    assert_equal name_2, mr.find_all_by_name("eLo")[1].name
+    assert_equal name_3, mr.find_all_by_name("ELO")[2].name
   end
+
+  #testing for nil or no name matching
 
 end

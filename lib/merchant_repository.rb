@@ -1,5 +1,6 @@
 require 'csv'
 require_relative 'merchants'
+require 'pry'
 
 class MerchantRepository
   attr_reader :merchants
@@ -12,17 +13,15 @@ class MerchantRepository
   end
 
   def find_by_id(id)
-    object = merchants.find do |merchant_object|
+    merchants.find do |merchant_object|
       merchant_object.id == id
     end
-    object
   end
 
   def find_all_by_name(name_fragment)
-    object = merchants.find_all do |merchant_object|
-      merchant_object.name.downcase.include?(name_fragment)
+    merchants.find_all do |merchant_object|
+      merchant_object.name.downcase.include?(name_fragment.downcase)
     end
-    object
   end
 
   def all
