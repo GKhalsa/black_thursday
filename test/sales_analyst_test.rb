@@ -8,7 +8,8 @@ class SalesAnalystTest < Minitest::Test
   def setup
     @se ||= SalesEngine.from_csv({
       :items => "./data/items.csv",
-      :merchants => "./data/merchants.csv"
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv"
       })
   end
 
@@ -38,7 +39,6 @@ class SalesAnalystTest < Minitest::Test
     merchants_with_high_item_count = sa.merchants_with_high_item_count
       assert_equal 52, merchants_with_high_item_count.count
   end
-meta single:true
   def test_average_item_price_per_merchant
     sa = SalesAnalyst.new(@se)
       assert_equal 16.66, sa.average_item_price_for_merchant(12334105)
@@ -46,11 +46,11 @@ meta single:true
 
   def test_average_average_price_across_all_merchants
     sa = SalesAnalyst.new(@se)
-    assert_equal 350.16, sa.average_average_price_per_merchant
+    assert_equal 350.29, sa.average_average_price_per_merchant
   end
 
   def test_golden_items
     sa = SalesAnalyst.new(@se)
-    assert_equal 114, sa.golden_items.count
+    assert_equal 5, sa.golden_items.count
   end
 end

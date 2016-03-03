@@ -6,7 +6,8 @@ class SalesEngineTest < Minitest::Test
   def setup
     @se ||= SalesEngine.from_csv({
       :items => "./data/items.csv",
-      :merchants => "./data/merchants.csv"
+      :merchants => "./data/merchants.csv",
+      :invoices => "./data/invoices.csv"
       })
   end
 
@@ -22,5 +23,12 @@ class SalesEngineTest < Minitest::Test
     item.merchant
     assert_equal "Madewithgitterxx", item.merchant.name
   end
-
+meta single:true
+  def test_relationship_layer_between_invoices_and_merchants
+    merchant = @se.merchants.find_by_id(12334105)
+    merchant.invoices
+    assert_equal 10, merchant.invoices.count
+    invoice = @se.invoices.find_by_id(1)
+    assert_equal "IanLudiBoards", invoice.merchant[0].name
+  end
 end

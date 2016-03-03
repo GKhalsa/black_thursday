@@ -13,6 +13,10 @@ class MerchantRepository
     sales_engine.items.item_array
   end
 
+  def invoices_from_invoice_repo
+    sales_engine.invoices.invoice_array
+  end
+
   def inspect
     "#<#{self.class} #{@merchant_array.size} rows>"
   end

@@ -13,4 +13,11 @@ class Merchant
     end
   end
 
+  def invoices
+    merchant_repo.invoices_from_invoice_repo.find_all do |invoice|
+      invoice.merchant_id == id
+    end
+  end
+
+
 end
