@@ -8,7 +8,9 @@ class Merchants
   end
 
   def items
-    merchant_repo.selling_items
+    merchant_repo.items_from_item_repo.find_all do |item|
+      item.merchant_id == id
+    end
   end
 
 end

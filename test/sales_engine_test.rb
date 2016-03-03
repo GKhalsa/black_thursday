@@ -17,10 +17,10 @@ class SalesEngineTest < Minitest::Test
   def test_starting_relationship_layer
     merchant = @se.merchants.find_by_id(12334105)
     merchant.items
-    # => [<item>, <item>, <item>]
-    item = @se.items.find_by_id(20)
+    assert_equal 3, merchant.items.count
+    item = @se.items.find_by_id(263395617)
     item.merchant
-    # => <merchant>
+    assert_equal "Madewithgitterxx", item.merchant.name
   end
 
 end

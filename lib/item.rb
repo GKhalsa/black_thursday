@@ -2,9 +2,10 @@ require 'pry'
 class Item
 
   attr_reader :id, :name, :description, :unit_price,
-                :created_at, :updated_at, :merchant_id
+                :created_at, :updated_at, :merchant_id,
+                :item_repo
 
-  def initialize(item_data)
+  def initialize(item_data, item_repo)
     @id = item_data[:id]
     @name = item_data[:name]
     @description = item_data[:description]
@@ -12,10 +13,17 @@ class Item
     @created_at = item_data[:created_at]
     @updated_at = item_data[:updated_at]
     @merchant_id = item_data[:merchant_id]
+    @item_repo = item_repo
   end
 
   def unit_price_by_dollars
     unit_price.to_f
+  end
+
+  def merchant
+    item_repo.searching_for_merchants.find do |merchant|
+      merchant.id == merchant_id
+    end
   end
 
 end

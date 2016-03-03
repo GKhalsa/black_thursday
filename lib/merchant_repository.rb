@@ -9,7 +9,7 @@ class MerchantRepository
     @merchants = []  #{:name => 'hello', :id => 123242}
   end
 
-  def selling_items
+  def items_from_item_repo
     sales_engine.items.items
   end
 

@@ -4,10 +4,14 @@ require 'pry'
 require 'bigdecimal'
 
 class ItemRepository
-  attr_reader :items
+  attr_reader :items, :sales_engine
   def initialize(sales_engine)
     @items = []
     @sales_engine ||= sales_engine
+  end
+
+  def searching_for_merchants
+    sales_engine.merchants.merchants
   end
 
   def inspect
@@ -24,7 +28,7 @@ class ItemRepository
       created_at = Time.new(row[:created_at])
       updated_at = Time.new(row[:updated_at])
       merchant_id = row[:merchant_id].to_i
-      @items << Item.new({:id => id, :name => name, :description => description, :unit_price => unit_price, :created_at => created_at, :updated_at => updated_at, :merchant_id => merchant_id})
+      @items << Item.new({:id => id, :name => name, :description => description, :unit_price => unit_price, :created_at => created_at, :updated_at => updated_at, :merchant_id => merchant_id}, self)
     end
   end
 
