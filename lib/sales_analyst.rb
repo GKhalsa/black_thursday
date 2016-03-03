@@ -34,7 +34,6 @@ class SalesAnalyst
   end
 
   def average_item_price_per_merchant(merchant_id)
-    #find the merchant by the id and then find the number of goods the merchant has and find the average price of goods
     merchant = sales_engine.merchant_repo.find_by_id(merchant_id)
     merchant_items = merchant.items
     prices = []
@@ -42,6 +41,23 @@ class SalesAnalyst
       prices << merchant_item.unit_price.to_f
     end
     (prices.reduce(:+)/prices.count).round(2)
+  end
+
+  def average_average_price_per_merchant
+    average_average_prices= []
+    sales_engine.merchant_repo.merchants.each do |merchant|
+      merch_id = merchant.id
+      average_average_prices << average_item_price_per_merchant(merch_id)
+    end
+    (average_average_prices.reduce(:+)/average_average_prices.count).round(2)
+  end
+
+  def golden_items
+    #go through every item, every item above golden item price is a golden items
+    golden_item_price = (average_items_per_merchant_standard_deviation * 2) + average_average_price_per_merchant
+    sales_engine.item_repo.items.find_all do |item|
+      item.unit_price > golden_item_price
+    end
   end
 
 
