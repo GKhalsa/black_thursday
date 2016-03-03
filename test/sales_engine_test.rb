@@ -19,15 +19,17 @@ class SalesEngineTest < Minitest::Test
     merchant = @se.merchants.find_by_id(12334105)
     merchant.items
     assert_equal 3, merchant.items.count
+
     item = @se.items.find_by_id(263395617)
     item.merchant
     assert_equal "Madewithgitterxx", item.merchant.name
   end
-meta single:true
+
   def test_relationship_layer_between_invoices_and_merchants
     merchant = @se.merchants.find_by_id(12334105)
     merchant.invoices
     assert_equal 10, merchant.invoices.count
+
     invoice = @se.invoices.find_by_id(1)
     assert_equal "IanLudiBoards", invoice.merchant[0].name
   end

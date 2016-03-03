@@ -53,6 +53,15 @@ class SalesAnalyst
     Math.sqrt(x).round(2)
   end
 
+  # def awesome_deviation_maker(mean, merch_avg_items)
+  #   x = (merch_avg_items.reduce(0) do |acc, avg_num|
+  #     acc + ((avg_num - mean) ** 2)
+  #   end)/(merch_avg_items.count - 1)
+  #   Math.sqrt(x).round(2)
+  # end
+
+
+
   def average_item_price_standard_deviation
     mean = average_average_price_per_merchant
     prices = []

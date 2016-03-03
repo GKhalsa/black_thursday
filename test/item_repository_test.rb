@@ -42,11 +42,10 @@ class ItemRepositoryTest < Minitest::Test
     assert_equal 6, item.count
     assert_equal "Introspection virginalle", item[0].name
   end
-
+meta hello:true
   def test_can_find_all_items_by_price_in_range
-    skip
     ir = @se.items
-    price_range = (59999..60001).to_a
+    price_range = (599..600)
     # price_range2 = (59888..59999).to_a
     # price_range3 = (60001..60009).to_a
     item = ir.find_all_by_price_in_range(price_range)

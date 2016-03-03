@@ -50,6 +50,8 @@ class InvoiceRepository
   def load_csv(invoice_file)
     contents = CSV.open "#{invoice_file}", headers: true, header_converters: :symbol
     contents.each do |row|
+      # @invoice_array << Invoice.new(row)
+
       id = row[:id].to_i
       customer_id = row[:customer_id].to_i
       merchant_id = row[:merchant_id].to_i

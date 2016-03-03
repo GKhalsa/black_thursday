@@ -53,4 +53,18 @@ class SalesAnalystTest < Minitest::Test
     sa = SalesAnalyst.new(@se)
     assert_equal 5, sa.golden_items.count
   end
+meta happy:true
+  # def test_awesome_deviation
+  #
+  #   sa = SalesAnalyst.new(@se)
+  #   mean = 4
+  #   merch_avg_items = [1,3,6,8,2]
+  #   expected = 2.92
+  #   result = sa.awesome_deviation_maker(mean, merch_avg_items)
+  #
+  #   assert_equal expected, result
+  #
+  # end
+
+
 end

@@ -63,9 +63,7 @@ class ItemRepository
 
   def find_all_by_price_in_range(price_range)
     item_array.find_all do |item|
-      price_range.find do |price|
-        item.unit_price == price
-      end
+      item.unit_price >= price_range.first && item.unit_price <= price_range.last
     end
   end
 
