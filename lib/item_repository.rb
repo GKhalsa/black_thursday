@@ -1,24 +1,29 @@
 require "csv"
 require_relative "item"
 require 'pry'
+require 'bigdecimal'
 
 class ItemRepository
   attr_reader :items
-  def initialize
+  def initialize(sales_engine)
     @items = []
+    @sales_engine ||= sales_engine
+  end
+
+  def inspect
+    "#<#{self.class} #{@items.size} rows>"
   end
 
   def load_csv(items_file)
-    contents = CSV.open ".#{items_file}", headers: true, header_converters: :symbol
+    contents = CSV.open "#{items_file}", headers: true, header_converters: :symbol
     contents.each do |row|
-      id = row[:id]
+      id = row[:id].to_i
       name = row[:name]
       description = row[:description]
-      unit_price = row[:unit_price]
-      created_at = row[:created_at]
-      updated_at = row[:updated_at]
-      merchant_id = row[:merchant_id]
-
+      unit_price = BigDecimal.new(row[:unit_price].to_i/100)
+      created_at = Time.new(row[:created_at])
+      updated_at = Time.new(row[:updated_at])
+      merchant_id = row[:merchant_id].to_i
       @items << Item.new({:id => id, :name => name, :description => description, :unit_price => unit_price, :created_at => created_at, :updated_at => updated_at, :merchant_id => merchant_id})
     end
   end

@@ -1,6 +1,7 @@
+require 'pry'
 class Item
 
-  attr_accessor :id, :name, :description, :unit_price,
+  attr_reader :id, :name, :description, :unit_price,
                 :created_at, :updated_at, :merchant_id
 
   def initialize(item_data)
