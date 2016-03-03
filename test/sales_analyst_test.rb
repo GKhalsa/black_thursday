@@ -53,7 +53,17 @@ class SalesAnalystTest < Minitest::Test
     sa = SalesAnalyst.new(@se)
     assert_equal 5, sa.golden_items.count
   end
-meta happy:true
+
+  meta happy:true
+  def test_average_invoices_per_merchant
+    sa = SalesAnalyst.new(@se)
+    assert_equal 10.49, sa.average_invoices_per_merchant
+  end
+
+  def test_average_invoices_per_merchant_standard_deviation
+    sa = SalesAnalyst.new(@se)
+    assert_equal 2, sa.average_invoices_per_merchant_standard_deviation
+  end
   # def test_awesome_deviation
   #
   #   sa = SalesAnalyst.new(@se)

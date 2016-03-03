@@ -83,5 +83,19 @@ class SalesAnalyst
     end
   end
 
+  def average_invoices_per_merchant
+    #go through each merchant and count the num of invoices and add them together and divide by amount of invoices total
+    merchant_invoices = []
+    sales_engine.merchants.merchant_array.each do |merchant|
+      merchant_invoices << merchant.invoices.count
+    end
+    (merchant_invoices.reduce(:+)/merchant_invoices.count.to_f).round(2)
+  end
+
+  def average_invoices_per_merchant_standard_deviation
+    
+  end
+
+
 
 end
