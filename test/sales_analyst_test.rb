@@ -33,4 +33,10 @@ class SalesAnalystTest < Minitest::Test
       assert_equal 3.26, sa.average_items_per_merchant_standard_deviation
   end
 
+  def test_merchants_with_high_item_count
+    sa = SalesAnalyst.new(@se)
+    merchants_with_high_item_count = sa.merchants_with_high_item_count
+      assert_equal 52, merchants_with_high_item_count.count
+  end
+
 end

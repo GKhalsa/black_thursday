@@ -25,4 +25,12 @@ class SalesAnalyst
     Math.sqrt(x).round(2)
   end
 
+  def merchants_with_high_item_count
+    high_item_count = average_items_per_merchant + average_items_per_merchant_standard_deviation
+
+    sales_engine.merchants.merchants.find_all do |merchant|
+      merchant.items.count > high_item_count
+    end
+  end
+
 end
