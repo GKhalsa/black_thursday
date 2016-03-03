@@ -16,4 +16,21 @@ class SalesAnalystTest < Minitest::Test
     sa = SalesAnalyst.new(@se)
     assert_equal SalesAnalyst, sa.class
   end
+
+  def test_sales_analyst_is_initialzed_with_an_instance_of_sales_engine
+    sa = SalesAnalyst.new(@se)
+    assert_equal SalesEngine, sa.sales_engine.class
+  end
+
+  def test_average_items_per_merchant
+    sa = SalesAnalyst.new(@se)
+
+    assert_equal 2.88, sa.average_items_per_merchant
+  end
+
+  def test_average_items_per_merchant_standard_deviation
+    sa = SalesAnalyst.new(@se)
+      assert_equal 3.26, sa.average_items_per_merchant_standard_deviation
+  end
+
 end
