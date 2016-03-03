@@ -1,4 +1,4 @@
-class Merchants
+class Merchant
   attr_accessor :name, :id, :merchant_repo
 
   def initialize(hash, merchant_repo = nil) #{:name => 'hello', :id => 123242}

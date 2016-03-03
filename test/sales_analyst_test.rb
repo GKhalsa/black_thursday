@@ -38,10 +38,10 @@ class SalesAnalystTest < Minitest::Test
     merchants_with_high_item_count = sa.merchants_with_high_item_count
       assert_equal 52, merchants_with_high_item_count.count
   end
-
+meta single:true
   def test_average_item_price_per_merchant
     sa = SalesAnalyst.new(@se)
-      assert_equal 15.67, sa.average_item_price_for_merchant(12334105)
+      assert_equal 16.66, sa.average_item_price_for_merchant(12334105)
   end
 
   def test_average_average_price_across_all_merchants

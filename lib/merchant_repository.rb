@@ -42,7 +42,7 @@ class MerchantRepository
     contents.each do |row|
       id = row[:id].to_i
       name = row[:name]
-      @merchant_array << Merchants.new({:id => id, :name => name}, self)
+      @merchant_array << Merchant.new({:id => id, :name => name}, self)
     end
   end
 

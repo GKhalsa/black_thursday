@@ -2,6 +2,7 @@ require "csv"
 require_relative "item"
 require 'pry'
 require 'bigdecimal'
+require 'time'
 
 class ItemRepository
   attr_reader :item_array, :sales_engine
@@ -24,9 +25,9 @@ class ItemRepository
       id = row[:id].to_i
       name = row[:name]
       description = row[:description]
-      unit_price = BigDecimal.new(row[:unit_price].to_i/100)
-      created_at = Time.new(row[:created_at])
-      updated_at = Time.new(row[:updated_at])
+      unit_price = BigDecimal.new(row[:unit_price])/100
+      created_at = Time.parse(row[:created_at])
+      updated_at = Time.parse(row[:updated_at])
       merchant_id = row[:merchant_id].to_i
       @item_array << Item.new({:id => id, :name => name, :description => description, :unit_price => unit_price, :created_at => created_at, :updated_at => updated_at, :merchant_id => merchant_id}, self)
     end
