@@ -11,7 +11,7 @@ class ItemRepository
   end
 
   def searching_for_merchants
-    sales_engine.merchants.merchants
+    sales_engine.merchant_repo.merchants
   end
 
   def inspect

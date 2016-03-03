@@ -10,7 +10,7 @@ class MerchantRepository
   end
 
   def items_from_item_repo
-    sales_engine.items.items
+    sales_engine.item_repo.items
   end
 
   def inspect

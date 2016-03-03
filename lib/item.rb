@@ -5,7 +5,7 @@ class Item
                 :created_at, :updated_at, :merchant_id,
                 :item_repo
 
-  def initialize(item_data, item_repo)
+  def initialize(item_data, item_repo = nil)
     @id = item_data[:id]
     @name = item_data[:name]
     @description = item_data[:description]

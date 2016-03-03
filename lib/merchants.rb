@@ -1,7 +1,7 @@
 class Merchants
   attr_accessor :name, :id, :merchant_repo
 
-  def initialize(hash, merchant_repo) #{:name => 'hello', :id => 123242}
+  def initialize(hash, merchant_repo = nil) #{:name => 'hello', :id => 123242}
     @name = hash[:name]
     @id = hash[:id]
     @merchant_repo = merchant_repo

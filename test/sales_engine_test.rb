@@ -11,14 +11,14 @@ class SalesEngineTest < Minitest::Test
   end
 
   def test_loading_in_the_csv
-    assert @se.merchants
+    assert @se.merchant_repo
   end
 
   def test_starting_relationship_layer
-    merchant = @se.merchants.find_by_id(12334105)
+    merchant = @se.merchant_repo.find_by_id(12334105)
     merchant.items
     assert_equal 3, merchant.items.count
-    item = @se.items.find_by_id(263395617)
+    item = @se.item_repo.find_by_id(263395617)
     item.merchant
     assert_equal "Madewithgitterxx", item.merchant.name
   end
