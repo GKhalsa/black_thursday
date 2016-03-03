@@ -3,38 +3,38 @@ require_relative 'merchants'
 require 'pry'
 
 class MerchantRepository
-  attr_reader :merchants, :sales_engine
+  attr_reader :merchant_array, :sales_engine
   def initialize(sales_engine)
     @sales_engine ||= sales_engine
-    @merchants = []  #{:name => 'hello', :id => 123242}
+    @merchant_array = []  #{:name => 'hello', :id => 123242}
   end
 
   def items_from_item_repo
-    sales_engine.item_repo.items
+    sales_engine.items.item_array
   end
 
   def inspect
-    "#<#{self.class} #{@merchants.size} rows>"
+    "#<#{self.class} #{@merchant_array.size} rows>"
   end
 
   def find_by_name(name)
-    merchants.find { |merchant_object| merchant_object.name.downcase == name.downcase}
+    merchant_array.find { |merchant_object| merchant_object.name.downcase == name.downcase}
   end
 
   def find_by_id(id)
-    merchants.find do |merchant_object|
+    merchant_array.find do |merchant_object|
       merchant_object.id == id
     end
   end
 
   def find_all_by_name(name_fragment)
-    merchants.find_all do |merchant_object|
+    merchant_array.find_all do |merchant_object|
       merchant_object.name.downcase.include?(name_fragment.downcase)
     end
   end
 
   def all
-    merchants
+    merchant_array
   end
 
   def load_csv(merchants_file)
@@ -42,7 +42,7 @@ class MerchantRepository
     contents.each do |row|
       id = row[:id].to_i
       name = row[:name]
-      @merchants << Merchants.new({:id => id, :name => name}, self)
+      @merchant_array << Merchants.new({:id => id, :name => name}, self)
     end
   end
 

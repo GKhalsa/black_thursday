@@ -7,8 +7,8 @@ require_relative '../lib/sales_engine'
 class SalesAnalystTest < Minitest::Test
   def setup
     @se ||= SalesEngine.from_csv({
-      :items => "../data/items.csv",
-      :merchants => "../data/merchants.csv"
+      :items => "./data/items.csv",
+      :merchants => "./data/merchants.csv"
       })
   end
 
@@ -41,7 +41,7 @@ class SalesAnalystTest < Minitest::Test
 
   def test_average_item_price_per_merchant
     sa = SalesAnalyst.new(@se)
-      assert_equal 15.67, sa.average_item_price_per_merchant(12334105)
+      assert_equal 15.67, sa.average_item_price_for_merchant(12334105)
   end
 
   def test_average_average_price_across_all_merchants
