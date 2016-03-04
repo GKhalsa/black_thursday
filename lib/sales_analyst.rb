@@ -1,7 +1,8 @@
 require 'pry'
+require 'time'
 
 class SalesAnalyst
-  attr_reader :sales_engine, :items_per_merchant, :average_average_prices
+  attr_reader :sales_engine, :items_per_merchant, :average_average_prices, :merchant_invoices
 
   def initialize(sales_engine)
     @sales_engine = sales_engine
@@ -53,14 +54,6 @@ class SalesAnalyst
     Math.sqrt(x).round(2)
   end
 
-  # def awesome_deviation_maker(mean, merch_avg_items)
-  #   x = (merch_avg_items.reduce(0) do |acc, avg_num|
-  #     acc + ((avg_num - mean) ** 2)
-  #   end)/(merch_avg_items.count - 1)
-  #   Math.sqrt(x).round(2)
-  # end
-
-
 
   def average_item_price_standard_deviation
     mean = average_average_price_per_merchant
@@ -84,18 +77,60 @@ class SalesAnalyst
   end
 
   def average_invoices_per_merchant
-    #go through each merchant and count the num of invoices and add them together and divide by amount of invoices total
-    merchant_invoices = []
+    @merchant_invoices = []
     sales_engine.merchants.merchant_array.each do |merchant|
       merchant_invoices << merchant.invoices.count
     end
     (merchant_invoices.reduce(:+)/merchant_invoices.count.to_f).round(2)
   end
 
+
   def average_invoices_per_merchant_standard_deviation
-    
+    mean = average_invoices_per_merchant
+    invoices = merchant_invoices
+    awesome_deviation_maker(mean, invoices)
   end
 
+  def top_merchants_by_invoice_count
+    top_performer_num = (average_invoices_per_merchant_standard_deviation * 2) + average_invoices_per_merchant
 
+    sales_engine.merchants.merchant_array.find_all do |merchant|
+      merchant.invoices.count > top_performer_num
+    end
+  end
+
+  def bottom_merchants_by_invoice_count
+    bottom_performer_num = average_invoices_per_merchant - (average_invoices_per_merchant_standard_deviation * 2)
+
+    sales_engine.merchants.merchant_array.find_all do |merchant|
+      merchant.invoices.count < bottom_performer_num
+    end
+  end
+
+  def awesome_deviation_maker(mean, avg_items)
+    pre_deviation = (avg_items.reduce(0) do |acc, avg_num|
+      acc + ((avg_num - mean) ** 2)
+    end)/(avg_items.count - 1).to_f
+
+    Math.sqrt(pre_deviation).round(2)
+  end
+
+  def invoice_count_per_day_hash
+    sales_engine.invoices.invoice_array.reduce(Hash.new(0)) do |days, invoice|
+      invoice_day = invoice.created_at.strftime("%A")
+      days[invoice_day] += 1
+      days
+    end
+  end
+
+  def top_days_by_invoice_count
+    mean = (sales_engine.invoices.invoice_array.count / 7).to_f
+    invoices_per_day = invoice_count_per_day_hash.values
+
+    day_deviation = awesome_deviation_maker(mean, invoices_per_day)
+    invoice_count_per_day_hash.find_all do |day,count|
+      count > (mean + day_deviation)
+    end
+  end
 
 end
