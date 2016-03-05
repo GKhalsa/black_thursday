@@ -1,9 +1,9 @@
 require "minitest/autorun"
 require "minitest/pride"
-require_relative "../lib/invoice_repository"
+require_relative "../lib/invoice_item_repository"
 require_relative "../lib/sales_engine"
 
-class InvoiceRepositoryTest < Minitest::Test
+class InvoiceItemRepositoryTest < Minitest::Test
 
   def setup
     @se ||= SalesEngine.from_csv({
@@ -13,7 +13,7 @@ class InvoiceRepositoryTest < Minitest::Test
       :invoice_items => "./data/invoice_items.csv"
       })
   end
-  def test_can_find_all_instances_of_invoice
+  def test_can_find_all_instances_of_invoice_item
     inv_repo = @se.invoices
     invoice = inv_repo.all
     assert_equal 4985, invoice.count

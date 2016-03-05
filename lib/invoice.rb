@@ -19,5 +19,4 @@ class Invoice
     end[0]
   end
 
-
 end
