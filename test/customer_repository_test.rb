@@ -36,7 +36,7 @@ class InvoiceItemRepositoryTest < Minitest::Test
     assert_equal 10, customers.count
   end
 
-  meta blah:true
+
   def test_can_find_all_by_last_name
     customer_repo = @se.customers
     customer = customer_repo.find_all_by_last_name("Pa")

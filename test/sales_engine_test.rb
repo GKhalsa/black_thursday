@@ -37,4 +37,15 @@ class SalesEngineTest < Minitest::Test
     invoice = @se.invoices.find_by_id(1)
     assert_equal "IanLudiBoards", invoice.merchant.name
   end
+
+  def test_relationship_layer_between_invoice_and_items
+    invoice = @se.invoices.find_by_id(20)
+    assert_equal 12336163, invoice.merchant_id
+    items = invoice.items
+    assert_equal 5, items.count
+    transactions = invoice.transactions
+    assert_equal 3, transactions.count
+    customer = invoice.customer
+    assert_equal "Sylvester", customer.first_name
+  end
 end

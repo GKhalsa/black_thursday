@@ -14,9 +14,9 @@ class SalesEngine
     @merchants = MerchantRepository.new(self)
     @items = ItemRepository.new(self)
     @invoices = InvoiceRepository.new(self)
-    @invoice_items = InvoiceItemRepository.new
-    @transactions = TransactionRepository.new
-    @customers = CustomerRepository.new
+    @invoice_items = InvoiceItemRepository.new(self)
+    @transactions = TransactionRepository.new(self)
+    @customers = CustomerRepository.new(self)
     csv_loader(items_file, merchants_file, invoice_file, invoice_item_file, transactions_file, customers_file)
   end
 

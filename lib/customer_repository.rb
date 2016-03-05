@@ -4,10 +4,11 @@ require 'bigdecimal'
 require 'pry'
 
 class CustomerRepository
-  attr_reader :customer_array
+  attr_reader :customer_array, :sales_engine
 
-  def initialize
+  def initialize(sales_engine)
     @customer_array = []
+    @sales_engine ||= sales_engine
   end
 
   def inspect
@@ -45,7 +46,7 @@ class CustomerRepository
       created_at = Time.parse(row[:created_at])
       updated_at = Time.parse(row[:updated_at])
       @customer_array << Customer.new({id: id, first_name: first_name, last_name: last_name,
-                                     created_at: created_at, updated_at: updated_at})
+                                     created_at: created_at, updated_at: updated_at},self)
     end
   end
 end

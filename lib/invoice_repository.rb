@@ -6,6 +6,7 @@ require 'time'
 
 class InvoiceRepository
   attr_reader :invoice_array, :sales_engine
+
   def initialize(sales_engine)
     @invoice_array = []
     @sales_engine ||= sales_engine
@@ -13,6 +14,14 @@ class InvoiceRepository
 
   def merchants_from_merch_repo
     sales_engine.merchants.merchant_array
+  end
+
+  def transactions_from_transaction_repo
+    sales_engine.transactions.transaction_array
+  end
+
+  def customers_from_customer_repo
+    sales_engine.customers.customer_array
   end
 
   def all
@@ -59,7 +68,7 @@ class InvoiceRepository
       created_at = Time.parse(row[:created_at])
       updated_at = Time.parse(row[:updated_at])
 
-      @invoice_array << Invoice.new({id: id, customer_id: customer_id, merchant_id: merchant_id, status: status, created_at: created_at, updated_at: updated_at},self)
+      @invoice_array << Invoice.new({id: id, customer_id: customer_id, merchant_id: merchant_id, status: status, created_at: created_at, updated_at: updated_at}, self)
     end
   end
 end

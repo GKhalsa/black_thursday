@@ -6,10 +6,11 @@ require 'time'
 require_relative "transaction"
 
 class TransactionRepository
-  attr_reader :transaction_array
+  attr_reader :transaction_array, :sales_engine
 
-  def initialize
+  def initialize(sales_engine)
     @transaction_array = []
+    @sales_engine ||= sales_engine
   end
 
   def inspect
@@ -57,7 +58,7 @@ class TransactionRepository
       @transaction_array << Transaction.new({:id => id,
       :invoice_id => invoice_id, :credit_card_number => credit_card_number,
       :credit_card_expiration_date => credit_card_expiration_date,
-      :result => result, :created_at => created_at, :updated_at => updated_at})
+      :result => result, :created_at => created_at, :updated_at => updated_at}, self)
     end
   end
 end

@@ -4,10 +4,11 @@ require 'bigdecimal'
 require 'pry'
 
 class InvoiceItemRepository
-  attr_reader :invoice_item_array
+  attr_reader :invoice_item_array, :sales_engine
 
-  def initialize
+  def initialize(sales_engine)
     @invoice_item_array = []
+    @sales_engine ||= sales_engine
   end
 
   def searching_for_merchants
@@ -53,7 +54,7 @@ class InvoiceItemRepository
       created_at = Time.parse(row[:created_at])
       updated_at = Time.parse(row[:updated_at])
 
-      @invoice_item_array << InvoiceItem.new({id: id, item_id: item_id, invoice_id: invoice_id, quantity: quantity, unit_price: unit_price, created_at: created_at, updated_at: updated_at})
+      @invoice_item_array << InvoiceItem.new({id: id, item_id: item_id, invoice_id: invoice_id, quantity: quantity, unit_price: unit_price, created_at: created_at, updated_at: updated_at},self)
     end
   end
 
