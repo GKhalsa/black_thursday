@@ -130,7 +130,16 @@ class SalesAnalyst
     day_deviation = awesome_deviation_maker(mean, invoices_per_day)
     invoice_count_per_day_hash.find_all do |day,count|
       count > (mean + day_deviation)
+    end.map {|day, count| day}
+  end
+
+  def invoice_status(status)
+    array_of_invoices = sales_engine.invoices.invoice_array
+    matching_invoice_array = array_of_invoices.find_all do |invoice|
+      invoice.status == status
     end
+   percentage = ((matching_invoice_array.count.to_f)/(array_of_invoices.count))
+   (percentage * 100).round(2)
   end
 
 end

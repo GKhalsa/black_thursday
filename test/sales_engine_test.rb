@@ -7,7 +7,8 @@ class SalesEngineTest < Minitest::Test
     @se ||= SalesEngine.from_csv({
       :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",
-      :invoices => "./data/invoices.csv"
+      :invoices => "./data/invoices.csv",
+      :invoice_items => "./data/invoice_items.csv"
       })
   end
 
@@ -31,6 +32,6 @@ class SalesEngineTest < Minitest::Test
     assert_equal 10, merchant.invoices.count
 
     invoice = @se.invoices.find_by_id(1)
-    assert_equal "IanLudiBoards", invoice.merchant[0].name
+    assert_equal "IanLudiBoards", invoice.merchant.name
   end
 end
