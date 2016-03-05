@@ -2,13 +2,16 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require_relative '../lib/sales_engine'
 require 'pry'
+
 class SalesEngineTest < Minitest::Test
   def setup
     @se ||= SalesEngine.from_csv({
       :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",
       :invoices => "./data/invoices.csv",
-      :invoice_items => "./data/invoice_items.csv"
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
       })
   end
 
