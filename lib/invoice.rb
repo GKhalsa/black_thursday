@@ -16,7 +16,7 @@ class Invoice
   def merchant
     invoice_repo.merchants_from_merch_repo.find_all do |merchant|
       merchant.id == merchant_id
-    end
+    end[0]
   end
 
 
