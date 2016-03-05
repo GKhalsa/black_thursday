@@ -8,7 +8,8 @@ class ItemRepositoryTest < Minitest::Test
     @se ||= SalesEngine.from_csv({
                   :items     => "./data/items.csv",
                   :merchants => "./data/merchants.csv",
-                  :invoices => "./data/invoices.csv"
+                  :invoices => "./data/invoices.csv",
+                  :invoice_items => "./data/invoice_items.csv"
                               })
   end
 
@@ -42,18 +43,18 @@ class ItemRepositoryTest < Minitest::Test
     assert_equal 6, item.count
     assert_equal "Introspection virginalle", item[0].name
   end
-meta hello:true
+
   def test_can_find_all_items_by_price_in_range
     ir = @se.items
     price_range = (599..600)
-    # price_range2 = (59888..59999).to_a
-    # price_range3 = (60001..60009).to_a
+    price_range2 = (598..599).to_a
+    price_range3 = (600..600).to_a
     item = ir.find_all_by_price_in_range(price_range)
-    # item2 = ir.find_all_by_price_in_range(price_range2)
-    # item3 = ir.find_all_by_price_in_range(price_range3)
+    item2 = ir.find_all_by_price_in_range(price_range2)
+    item3 = ir.find_all_by_price_in_range(price_range3)
     assert_equal 6, item.count
-    # assert_equal 0, item2.count
-    # assert_equal 0, item3.count
+    assert_equal 0, item2.count
+    assert_equal 6, item3.count
   end
 
   def test_can_find_all_items_by_merchant_id
