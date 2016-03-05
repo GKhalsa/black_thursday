@@ -39,7 +39,7 @@ class InvoiceRepositoryTest < Minitest::Test
 
   def test_can_find_all_by_status
     inv_repo = @se.invoices
-    invoice = inv_repo.find_all_by_status("pending")
+    invoice = inv_repo.find_all_by_status(:pending)
     assert_equal 1473, invoice.count
   end
 

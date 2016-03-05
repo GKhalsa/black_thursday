@@ -31,6 +31,6 @@ class SalesEngineTest < Minitest::Test
     assert_equal 10, merchant.invoices.count
 
     invoice = @se.invoices.find_by_id(1)
-    assert_equal "IanLudiBoards", invoice.merchant[0].name
+    assert_equal "IanLudiBoards", invoice.merchant.name
   end
 end
