@@ -4,9 +4,10 @@ require 'bigdecimal'
 require 'pry'
 
 class InvoiceItemRepository
-  def initialize(sales_engine)
+  attr_reader :invoice_item_array
+
+  def initialize
     @invoice_item_array = []
-    @sales_engine ||= sales_engine
   end
 
   def searching_for_merchants
@@ -14,54 +15,30 @@ class InvoiceItemRepository
   end
 
   def inspect
-    "#<#{self.class} #{@item_array.size} rows>"
+    "#<#{self.class} #{@invoice_item_array.size} rows>"
   end
 
   def all
-    item_array
+    invoice_item_array
   end
 
   def find_by_id(id)
-    item_array.find do |item|
-      item.id == id
+    invoice_item_array.find do |invoice_item|
+      invoice_item.id == id
     end
   end
 
-  def find_by_name(name)
-    item_array.find do |item|
-      item.name == name
+  def find_all_by_item_id(item_id)
+    invoice_item_array.find_all do |invoice_item|
+      invoice_item.item_id == item_id
     end
   end
 
-  def find_all_with_description(description)
-    item_array.find_all do |item|
-      item.description.downcase.include?(description.downcase)
+  def find_all_by_invoice_id(invoice_id)
+    invoice_item_array.find_all do |invoice_item|
+      invoice_item.invoice_id == invoice_id
     end
   end
-
-  def find_all_by_price(unit_price)
-    item_array.find_all do |item|
-      item.unit_price == unit_price
-    end
-  end
-
-  def find_all_by_price_in_range(price_range)
-    item_array.find_all do |item|
-      item.unit_price >= price_range.first && item.unit_price <= price_range.last
-    end
-  end
-
-  def find_all_by_merchant_id(merchant_id)
-    item_array.find_all do |item|
-      item.merchant_id == merchant_id
-    end
-  end
-  end
-
-
-
-
-
 
   def load_csv(invoice_item_file)
     contents = CSV.open "#{invoice_item_file}", headers: true, header_converters: :symbol

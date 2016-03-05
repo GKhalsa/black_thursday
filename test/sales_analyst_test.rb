@@ -84,7 +84,6 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 4, sa.bottom_merchants_by_invoice_count.count
   end
 
-  meta happy:true
   def test_top_days_by_invoice_count
     sa = SalesAnalyst.new(@se)
     assert_equal 1, sa.top_days_by_invoice_count.count
