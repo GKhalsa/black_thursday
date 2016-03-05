@@ -13,6 +13,10 @@ class TransactionRepository
     @sales_engine ||= sales_engine
   end
 
+  def invoices_from_invoice_repo
+    sales_engine.invoices.invoice_array
+  end
+
   def inspect
     "#<#{self.class} #{@transaction_array.size} rows>"
   end

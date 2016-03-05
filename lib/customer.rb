@@ -1,4 +1,3 @@
-require 'pry'
 class Customer
 
   attr_reader :id, :first_name, :last_name, :created_at,
@@ -12,4 +11,20 @@ class Customer
     @updated_at = customer_data[:updated_at]
     @customer_repo = customer_repo
   end
+
+  def invoices
+    customer_repo.invoices_from_invoice_repo.find_all do |invoice|
+      invoice.customer_id == id
+    end
+  end
+
+  def merchants
+  merchants = customer_repo.merchants_from_merchant_repo
+  x = invoices.map do |invoice|
+  y =   merchants.find do |merchant|
+      merchant.id == invoice.merchant_id
+    end
+  end
+end
+
 end

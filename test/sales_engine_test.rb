@@ -38,7 +38,7 @@ class SalesEngineTest < Minitest::Test
     assert_equal "IanLudiBoards", invoice.merchant.name
   end
 
-  def test_relationship_layer_between_invoice_and_items
+  def test_relationship_layer_between_invoice_and_items_transactions_customers
     invoice = @se.invoices.find_by_id(20)
     assert_equal 12336163, invoice.merchant_id
     items = invoice.items
@@ -48,4 +48,24 @@ class SalesEngineTest < Minitest::Test
     customer = invoice.customer
     assert_equal "Sylvester", customer.first_name
   end
+
+  def test_relationship_layer_between_transactions_and_invoices
+    transaction = @se.transactions.find_by_id(40)
+    invoice = transaction.invoice
+    assert_equal 12335150, invoice.merchant_id
+  end
+
+  def test_relationship_layer_between_merchants_and_customers
+    merchant = @se.merchants.find_by_id(12334105)
+    customers = merchant.customers
+    assert_equal 10, customers.count
+  end
+
+  meta big:true
+  def test_relationship_layer_between_customers_and_merchants
+    customer = @se.customers.find_by_id(30)
+    merchants = customer.merchants
+    assert_equal 5, merchants.count
+  end
+
 end

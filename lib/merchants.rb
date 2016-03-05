@@ -19,5 +19,13 @@ class Merchant
     end
   end
 
+  def customers
+    customers = merchant_repo.customers_from_customer_repo
+    invoices.map do |invoice|
+      customers.find do |customer|
+        customer.id == invoice.customer_id
+      end
+    end
+  end
 
 end

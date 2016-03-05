@@ -15,6 +15,14 @@ class CustomerRepository
     "#<#{self.class} #{@customer_array.size} rows>"
   end
 
+  def merchants_from_merchant_repo
+    sales_engine.merchants.merchant_array
+  end
+
+  def invoices_from_invoice_repo
+    sales_engine.invoices.invoice_array    
+  end
+
   def all
     customer_array
   end
