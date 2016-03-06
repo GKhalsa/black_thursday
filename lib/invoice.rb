@@ -50,4 +50,17 @@ class Invoice
     end
   end
 
+  def invoice_items
+    invoice_repo.invoice_items_from_inv_item_array.find_all do |invoice_item|
+      invoice_item.invoice_id == id
+    end
+  end
+
+  def total
+    invoice_items.reduce(0) do |total, invoice_item|
+      total += (invoice_item.unit_price * invoice_item.quantity)
+    end
+    # require "pry"; binding.pry
+  end
+
 end

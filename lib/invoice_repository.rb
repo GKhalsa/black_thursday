@@ -24,6 +24,10 @@ class InvoiceRepository
     sales_engine.customers.customer_array
   end
 
+  def invoice_items_from_inv_item_array
+    sales_engine.invoice_items.invoice_item_array
+  end
+
   def all
     invoice_array
   end
