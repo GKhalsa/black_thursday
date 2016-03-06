@@ -44,4 +44,10 @@ class Invoice
     end
   end
 
+  def is_paid_in_full?
+    x = transactions.any? do |transaction|
+      transaction.result == "success"
+    end
+  end
+
 end

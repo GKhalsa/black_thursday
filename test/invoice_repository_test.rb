@@ -46,14 +46,4 @@ class InvoiceRepositoryTest < Minitest::Test
     assert_equal 1473, invoice.count
   end
 
-
-
-
-
-
-
-
-
-
-
 end

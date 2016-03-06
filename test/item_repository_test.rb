@@ -65,6 +65,8 @@ class ItemRepositoryTest < Minitest::Test
     assert_equal "Eule - Topflappen, handgehäkelt, Paar", item[0].name
     assert_equal 263396279, item[0].id
   end
+
+  
   #test for edge cases nil as argument, non matching arguments
 
 end
