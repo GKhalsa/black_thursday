@@ -20,7 +20,7 @@ class CustomerRepository
   end
 
   def invoices_from_invoice_repo
-    sales_engine.invoices.invoice_array    
+    sales_engine.invoices.invoice_array
   end
 
   def all
@@ -35,13 +35,13 @@ class CustomerRepository
 
   def find_all_by_first_name(first_name)
     customer_array.find_all do |customer|
-      customer.first_name.include?(first_name)
+      customer.first_name.downcase.include?(first_name.downcase)
     end
   end
 
   def find_all_by_last_name(last_name)
     customer_array.find_all do |customer|
-      customer.last_name.include?(last_name)
+      customer.last_name.downcase.include?(last_name.downcase)
     end
   end
 

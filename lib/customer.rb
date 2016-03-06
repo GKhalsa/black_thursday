@@ -20,8 +20,8 @@ class Customer
 
   def merchants
   merchants = customer_repo.merchants_from_merchant_repo
-  x = invoices.map do |invoice|
-  y =   merchants.find do |merchant|
+  invoices.map do |invoice|
+    merchants.find do |merchant|
       merchant.id == invoice.merchant_id
     end
   end

@@ -20,12 +20,16 @@ class Merchant
   end
 
   def customers
+    hash = {}
     customers = merchant_repo.customers_from_customer_repo
     invoices.map do |invoice|
       customers.find do |customer|
-        customer.id == invoice.customer_id
+        if customer.id == invoice.customer_id
+          hash[customer] = customer.id
+        end
       end
     end
+    hash.keys
   end
 
 end

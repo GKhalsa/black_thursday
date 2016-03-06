@@ -56,12 +56,11 @@ class SalesEngineTest < Minitest::Test
   end
 
   def test_relationship_layer_between_merchants_and_customers
-    merchant = @se.merchants.find_by_id(12334105)
+    merchant = @se.merchants.find_by_id(12334194)
     customers = merchant.customers
-    assert_equal 10, customers.count
+    assert_equal 12, customers.count
   end
 
-  meta big:true
   def test_relationship_layer_between_customers_and_merchants
     customer = @se.customers.find_by_id(30)
     merchants = customer.merchants
