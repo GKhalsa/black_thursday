@@ -2,10 +2,11 @@ require 'pry'
 require 'time'
 
 class SalesAnalyst
-  attr_reader :sales_engine, :items_per_merchant, :average_average_prices, :merchant_invoices
+  attr_reader :sales_engine, :items_per_merchant,
+              :average_average_prices, :merchant_invoices
 
   def initialize(sales_engine)
-    @sales_engine = sales_engine
+    @sales_engine ||= sales_engine
   end
 
   def average_items_per_merchant

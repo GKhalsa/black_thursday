@@ -6,6 +6,7 @@ require 'time'
 
 class ItemRepository
   attr_reader :item_array, :sales_engine
+
   def initialize(sales_engine)
     @item_array = []
     @sales_engine ||= sales_engine
@@ -20,7 +21,6 @@ class ItemRepository
   def inspect
     "#<#{self.class} #{@item_array.size} rows>"
   end
-
 
   def all
     item_array
@@ -71,12 +71,12 @@ class ItemRepository
 
   def instance_loader(data)
     @item_array << Item.new({
-        id: data[0],
-        name: data[1],
+        id:          data[0],
+        name:        data[1],
         description: data[2],
-        unit_price: data[3],
-        created_at: data[4],
-        updated_at: data[5],
+        unit_price:  data[3],
+        created_at:  data[4],
+        updated_at:  data[5],
         merchant_id: data[6]}, self)
   end
 

@@ -6,12 +6,12 @@ require 'pry'
 class SalesEngineTest < Minitest::Test
   def setup
     @se ||= SalesEngine.from_csv({
-      :items => "./data/items.csv",
-      :merchants => "./data/merchants.csv",
-      :invoices => "./data/invoices.csv",
+      :items         => "./data/items.csv",
+      :merchants     => "./data/merchants.csv",
+      :invoices      => "./data/invoices.csv",
       :invoice_items => "./fixtures/invoice_items_fixture.csv",
-      :transactions => "./data/transactions.csv",
-      :customers => "./data/customers.csv"
+      :transactions  => "./data/transactions.csv",
+      :customers     => "./data/customers.csv"
       })
   end
 
