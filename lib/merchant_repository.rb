@@ -1,6 +1,7 @@
 require 'csv'
 require_relative 'merchants'
 require 'pry'
+require_relative 'loader'
 
 class MerchantRepository
   attr_reader :merchant_array, :sales_engine
@@ -46,7 +47,13 @@ class MerchantRepository
   end
 
   def load_csv(merchants_file)
-    contents = CSV.open "#{merchants_file}", headers: true, header_converters: :symbol
+    if merchant_array.empty?
+      contents = FileLoader.load_csv(merchants_file)
+      csv_contents_loader(contents)
+    end
+  end
+
+  def csv_contents_loader(contents)
     contents.each do |row|
       id = row[:id].to_i
       name = row[:name]

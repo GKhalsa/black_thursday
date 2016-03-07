@@ -2,6 +2,7 @@ require 'csv'
 require_relative 'customer'
 require 'bigdecimal'
 require 'pry'
+require_relative 'loader'
 
 class CustomerRepository
   attr_reader :customer_array, :sales_engine
@@ -46,15 +47,30 @@ class CustomerRepository
   end
 
   def load_csv(customers_file)
-    contents = CSV.open "#{customers_file}", headers: true, header_converters: :symbol
-    contents.each do |row|
-      id = row[:id].to_i
-      first_name = row[:first_name]
-      last_name = row[:last_name]
-      created_at = Time.parse(row[:created_at])
-      updated_at = Time.parse(row[:updated_at])
-      @customer_array << Customer.new({id: id, first_name: first_name, last_name: last_name,
-                                     created_at: created_at, updated_at: updated_at},self)
+    if customer_array.empty?
+      contents = FileLoader.load_csv(customers_file)
+      csv_contents_parser(contents)
     end
   end
+
+  def instance_generator(data)
+    @customer_array << Customer.new({
+            id: data[0], first_name: data[1],
+            last_name: data[2], created_at: data[3],
+            updated_at: data[4]},self)
+
+  end
+
+  def csv_contents_parser(contents)
+    contents.each do |row|
+      data = []
+      data << row[:id].to_i
+      data << row[:first_name]
+      data << row[:last_name]
+      data << Time.parse(row[:created_at])
+      data << Time.parse(row[:updated_at])
+      instance_generator(data)
+    end
+  end
+
 end

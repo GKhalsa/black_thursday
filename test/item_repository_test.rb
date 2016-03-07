@@ -6,13 +6,13 @@ require_relative '../lib/sales_engine'
 class ItemRepositoryTest < Minitest::Test
   def setup
     @se ||= SalesEngine.from_csv({
-                  :items     => "./data/items.csv",
-                  :merchants => "./data/merchants.csv",
-                  :invoices => "./data/invoices.csv",
-                  :invoice_items => "./data/invoice_items.csv",
-                  :transactions => "./data/transactions.csv",
-                  :customers => "./data/customers.csv"
-                              })
+        :items     => "./data/items.csv",
+        :merchants => "./data/merchants.csv",
+        :invoices => "./data/invoices.csv",
+        :invoice_items => "./fixtures/invoice_items_fixture.csv",
+        :transactions => "./data/transactions.csv",
+        :customers => "./data/customers.csv"
+                    })
   end
 
   def test_can_find_all_instances_of_item
@@ -66,7 +66,7 @@ class ItemRepositoryTest < Minitest::Test
     assert_equal 263396279, item[0].id
   end
 
-  
+
   #test for edge cases nil as argument, non matching arguments
 
 end

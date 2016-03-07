@@ -4,6 +4,7 @@ require 'pry'
 require 'bigdecimal'
 require 'time'
 require_relative "transaction"
+require_relative "loader"
 
 class TransactionRepository
   attr_reader :transaction_array, :sales_engine
@@ -50,19 +51,32 @@ class TransactionRepository
   end
 
   def load_csv(transactions_file)
-    contents = CSV.open "#{transactions_file}", headers: true, header_converters: :symbol
+    if transaction_array.empty?
+      contents = FileLoader.load_csv(transactions_file)
+      csv_contents_loader(contents)
+    end
+  end
+
+  def instance_loader(data)
+    @transaction_array << Transaction.new({
+      id: data[0], invoice_id: data[1],
+      credit_card_number: data[2],
+      credit_card_expiration_date: data[3],
+      result: data[4], created_at: data[5],
+      updated_at: data[6]}, self)
+  end
+
+  def csv_contents_loader(contents)
     contents.each do |row|
-      id = row[:id].to_i
-      invoice_id = row[:invoice_id].to_i
-      credit_card_number = row[:credit_card_number].to_i
-      credit_card_expiration_date = row[:credit_card_expiration_date]
-      result = row[:result]
-      created_at = Time.parse(row[:created_at])
-      updated_at = Time.parse(row[:updated_at])
-      @transaction_array << Transaction.new({:id => id,
-      :invoice_id => invoice_id, :credit_card_number => credit_card_number,
-      :credit_card_expiration_date => credit_card_expiration_date,
-      :result => result, :created_at => created_at, :updated_at => updated_at}, self)
+      data = []
+      data << row[:id].to_i
+      data << row[:invoice_id].to_i
+      data << row[:credit_card_number].to_i
+      data << row[:credit_card_expiration_date]
+      data << row[:result]
+      data << Time.parse(row[:created_at])
+      data << Time.parse(row[:updated_at])
+      instance_loader(data)
     end
   end
 end

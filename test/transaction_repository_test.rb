@@ -11,7 +11,7 @@ class TransactionRepositoryTest < Minitest::Test
       :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",
       :invoices => "./data/invoices.csv",
-      :invoice_items => "./data/invoice_items.csv",
+      :invoice_items => "./fixtures/invoice_items_fixture.csv",
       :transactions => "./data/transactions.csv",
       :customers => "./data/customers.csv"
       })
@@ -35,10 +35,9 @@ class TransactionRepositoryTest < Minitest::Test
     assert_equal 3, transactions.count
   end
 
-
   def test_can_find_all_transactions_by_credit_card_number
     transaction_repo = @se.transactions
-    transactions = transaction_repo.find_all_by_credit_card_number("4518913442963142")
+    transactions = transaction_repo.find_all_by_credit_card_number(4518913442963142)
     assert_equal 1, transactions.count
   end
 

@@ -10,7 +10,7 @@ class InvoiceItemRepositoryTest < Minitest::Test
       :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",
       :invoices => "./data/invoices.csv",
-      :invoice_items => "./data/invoice_items.csv",
+      :invoice_items => "./fixtures/invoice_items_fixture.csv",
       :transactions => "./data/transactions.csv",
       :customers => "./data/customers.csv"
       })
@@ -33,7 +33,7 @@ class InvoiceItemRepositoryTest < Minitest::Test
     customer = customer_repo.find_all_by_first_name("Pas")
     assert_equal 1, customer.count
     customers = customer_repo.find_all_by_first_name("Pa")
-    assert_equal 10, customers.count
+    assert_equal 11, customers.count
   end
 
 

@@ -7,13 +7,13 @@ require_relative '../lib/sales_engine'
 class MerchantRepositoryTest < Minitest::Test
   def setup
     @se ||= SalesEngine.from_csv({
-                  :items     => "./data/items.csv",
-                  :merchants => "./data/merchants.csv",
-                  :invoices => "./data/invoices.csv",
-                  :invoice_items => "./data/invoice_items.csv",
-                  :transactions => "./data/transactions.csv",
-                  :customers => "./data/customers.csv"
-                              })
+        :items     => "./data/items.csv",
+        :merchants => "./data/merchants.csv",
+        :invoices => "./data/invoices.csv",
+        :invoice_items => "./fixtures/invoice_items_fixture.csv",
+        :transactions => "./data/transactions.csv",
+        :customers => "./data/customers.csv"
+                    })
   end
 
   def test_can_it_find_a_merchant_by_name
