@@ -7,23 +7,42 @@ class MerchantRepository
   attr_reader :merchant_array, :sales_engine
   def initialize(sales_engine)
     @sales_engine ||= sales_engine
-    @merchant_array = []  #{:name => 'hello', :id => 123242}
+    @merchant_array = []
   end
 
-  def items_from_item_repo
-    sales_engine.items.item_array
+  def items_from_item_repo(id)
+    items = sales_engine.items.item_array
+    items.find_all { |item| item.merchant_id == id }
   end
 
-  def invoices_from_invoice_repo
-    sales_engine.invoices.invoice_array
+  def invoices_from_invoice_repo(id)
+    invoices = sales_engine.invoices.invoice_array
+    invoices.find_all { |invoice| invoice.merchant_id == id }
   end
 
-  def customers_from_customer_repo
-    sales_engine.customers.customer_array
+  def customers_from_customer_repo(id)
+    all_customers = sales_engine.customers.customer_array
+    pair_customers_to_merchant(id, all_customers)
   end
+
+  def pair_customers_to_merchant(id, all_customers)
+    merchant_customers_hash = {}
+    invoices_from_invoice_repo(id).map do |invoice|
+      all_customers.find do |customer|
+        if customer.id == invoice.customer_id
+          merchant_customers_hash[customer] = customer.id
+        end
+      end
+    end
+    merchant_customers_hash.keys
+  end 
 
   def inspect
     "#<#{self.class} #{@merchant_array.size} rows>"
+  end
+
+  def all
+    merchant_array
   end
 
   def find_by_name(name)
@@ -40,10 +59,6 @@ class MerchantRepository
     merchant_array.find_all do |merchant_object|
       merchant_object.name.downcase.include?(name_fragment.downcase)
     end
-  end
-
-  def all
-    merchant_array
   end
 
   def load_csv(merchants_file)

@@ -8,28 +8,15 @@ class Merchant
   end
 
   def items
-    merchant_repo.items_from_item_repo.find_all do |item|
-      item.merchant_id == id
-    end
+    merchant_repo.items_from_item_repo(id)
   end
 
   def invoices
-    merchant_repo.invoices_from_invoice_repo.find_all do |invoice|
-      invoice.merchant_id == id
-    end
+    merchant_repo.invoices_from_invoice_repo(id)
   end
 
   def customers
-    hash = {}
-    customers = merchant_repo.customers_from_customer_repo
-    invoices.map do |invoice|
-      customers.find do |customer|
-        if customer.id == invoice.customer_id
-          hash[customer] = customer.id
-        end
-      end
-    end
-    hash.keys
+    merchant_repo.customers_from_customer_repo(id)
   end
 
 end

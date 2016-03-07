@@ -59,11 +59,11 @@ class TransactionRepository
 
   def instance_loader(data)
     @transaction_array << Transaction.new({
-      id: data[0], invoice_id: data[1],
-      credit_card_number: data[2],
-      credit_card_expiration_date: data[3],
-      result: data[4], created_at: data[5],
-      updated_at: data[6]}, self)
+                id: data[0], invoice_id: data[1],
+                credit_card_number: data[2],
+                credit_card_expiration_date: data[3],
+                result: data[4], created_at: data[5],
+                updated_at: data[6]}, self)
   end
 
   def csv_contents_loader(contents)
