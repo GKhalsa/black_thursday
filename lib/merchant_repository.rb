@@ -20,22 +20,18 @@ class MerchantRepository
     invoices.find_all { |invoice| invoice.merchant_id == id }
   end
 
-  def customers_from_customer_repo(id)
-    all_customers = sales_engine.customers.customer_array
-    pair_customers_to_merchant(id, all_customers)
-  end
 
-  def pair_customers_to_merchant(id, all_customers)
-    merchant_customers_hash = {}
-    invoices_from_invoice_repo(id).map do |invoice|
-      all_customers.find do |customer|
-        if customer.id == invoice.customer_id
-          merchant_customers_hash[customer] = customer.id
-        end
-      end
-    end
-    merchant_customers_hash.keys
-  end 
+  # def pair_customers_to_merchant(id, all_customers)
+  #   merchant_customers_hash = {}
+  #   invoices_from_invoice_repo(id).map do |invoice|
+  #     all_customers.find do |customer|
+  #       if customer.id == invoice.customer_id
+  #         merchant_customers_hash[customer] = customer.id
+  #       end
+  #     end
+  #   end
+  #   merchant_customers_hash.keys
+  # end
 
   def inspect
     "#<#{self.class} #{@merchant_array.size} rows>"
@@ -72,7 +68,9 @@ class MerchantRepository
     contents.each do |row|
       id = row[:id].to_i
       name = row[:name]
-      @merchant_array << Merchant.new({:id => id, :name => name}, self)
+      @merchant_array << Merchant.new({
+                        :id   => id,
+                        :name => name}, self)
     end
   end
 

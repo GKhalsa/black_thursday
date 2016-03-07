@@ -14,8 +14,10 @@ class TransactionRepository
     @sales_engine ||= sales_engine
   end
 
-  def invoices_from_invoice_repo
-    sales_engine.invoices.invoice_array
+  def invoices_from_invoice_repo(invoice_id)
+    sales_engine.invoices.invoice_array.find do |invoice|
+      invoice_id == invoice.id
+    end
   end
 
   def inspect
@@ -59,10 +61,12 @@ class TransactionRepository
 
   def instance_loader(data)
     @transaction_array << Transaction.new({
-                id: data[0], invoice_id: data[1],
+                id: data[0],
+                invoice_id: data[1],
                 credit_card_number: data[2],
                 credit_card_expiration_date: data[3],
-                result: data[4], created_at: data[5],
+                result: data[4],
+                created_at: data[5],
                 updated_at: data[6]}, self)
   end
 

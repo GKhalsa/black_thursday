@@ -20,8 +20,10 @@ class CustomerRepository
     sales_engine.merchants.merchant_array
   end
 
-  def invoices_from_invoice_repo
-    sales_engine.invoices.invoice_array
+  def invoices_from_invoice_repo(id)
+    sales_engine.invoices.invoice_array.find_all do |invoice|
+      invoice.customer_id == id
+    end
   end
 
   def all
@@ -55,8 +57,10 @@ class CustomerRepository
 
   def instance_generator(data)
     @customer_array << Customer.new({
-            id: data[0], first_name: data[1],
-            last_name: data[2], created_at: data[3],
+            id:         data[0],
+            first_name: data[1],
+            last_name:  data[2],
+            created_at: data[3],
             updated_at: data[4]},self)
 
   end

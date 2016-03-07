@@ -18,10 +18,7 @@ class InvoiceItem
   end
 
   def find_item
-    array_of_items = invoice_item_repo.sales_engine.items.item_array
-    found_item = array_of_items.find do |item|
-      item.id == item_id
-    end
+    invoice_item_repo.items_from_item_repo(item_id)
   end
 
 end

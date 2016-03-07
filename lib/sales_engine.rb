@@ -8,15 +8,17 @@ require_relative 'customer_repository'
 
 
 class SalesEngine
-  attr_reader :merchants, :items, :invoices, :invoice_items, :transactions, :customers
+  attr_reader :merchants, :items, :invoices,
+              :invoice_items, :transactions,
+              :customers
 
   def initialize(items_file, merchants_file, invoice_file, invoice_item_file, transactions_file, customers_file)
-    @merchants ||= MerchantRepository.new(self)
-    @items ||= ItemRepository.new(self)
-    @invoices ||= InvoiceRepository.new(self)
+    @merchants     ||= MerchantRepository.new(self)
+    @items         ||= ItemRepository.new(self)
+    @invoices      ||= InvoiceRepository.new(self)
     @invoice_items ||= InvoiceItemRepository.new(self)
-    @transactions ||= TransactionRepository.new(self)
-    @customers ||= CustomerRepository.new(self)
+    @transactions  ||= TransactionRepository.new(self)
+    @customers     ||= CustomerRepository.new(self)
     csv_loader(items_file, merchants_file, invoice_file, invoice_item_file, transactions_file, customers_file)
   end
 
@@ -30,7 +32,12 @@ class SalesEngine
   end
 
   def self.from_csv(csv_data)
-    SalesEngine.new(csv_data[:items], csv_data[:merchants], csv_data[:invoices], csv_data[:invoice_items], csv_data[:transactions], csv_data[:customers])
+    SalesEngine.new(csv_data[:items],
+                    csv_data[:merchants],
+                    csv_data[:invoices],
+                    csv_data[:invoice_items],
+                    csv_data[:transactions],
+                    csv_data[:customers])
   end
 
 end

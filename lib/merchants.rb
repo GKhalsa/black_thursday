@@ -16,7 +16,7 @@ class Merchant
   end
 
   def customers
-    merchant_repo.customers_from_customer_repo(id)
+    invoices.map {|invoice| invoice.customer}.uniq
   end
 
 end

@@ -20,6 +20,12 @@ class InvoiceItemRepository
     "#<#{self.class} #{@invoice_item_array.size} rows>"
   end
 
+  def items_from_item_repo(item_id)
+    sales_engine.items.item_array.find do |item|
+      item.id == item_id
+    end
+  end
+
   def all
     invoice_item_array
   end
@@ -51,9 +57,12 @@ class InvoiceItemRepository
 
   def instance_generator(data)
     @invoice_item_array << InvoiceItem.new({
-                   id: data[0], item_id: data[1],
-                   invoice_id: data[2], quantity: data[3],
-                   unit_price: data[4], created_at: data[5],
+                   id:         data[0],
+                   item_id:    data[1],
+                   invoice_id: data[2],
+                   quantity:   data[3],
+                   unit_price: data[4],
+                   created_at: data[5],
                    updated_at: data[6]},self)
   end
 

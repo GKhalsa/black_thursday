@@ -66,12 +66,12 @@ class SalesEngineTest < Minitest::Test
     merchants = customer.merchants
     assert_equal 5, merchants.count
   end
+
   def test_that_invoices_are_paid_in_full
     invoice = @se.invoices.find_by_id(10)
     assert_equal true, invoice.is_paid_in_full?
   end
 
-  meta big:true
   def test_that_invoices_can_total
     invoice = @se.invoices.find_by_id(1)
     assert_equal 21067.77, invoice.total

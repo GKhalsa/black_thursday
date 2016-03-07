@@ -76,9 +76,12 @@ class InvoiceRepository
 
   def instance_generator(data)
     @invoice_array << Invoice.new({
-              id: data[0], customer_id: data[1],
-              merchant_id: data[2], status: data[3],
-              created_at: data[4], updated_at: data[5]}, self)
+              id:          data[0],
+              customer_id: data[1],
+              merchant_id: data[2],
+              status:      data[3],
+              created_at:  data[4],
+              updated_at:  data[5]}, self)
   end
 
   def csv_contents_parser(contents)
