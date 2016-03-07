@@ -13,20 +13,30 @@ class InvoiceRepository
     @sales_engine ||= sales_engine
   end
 
-  def merchants_from_merch_repo
-    sales_engine.merchants.merchant_array
+  def merchants_from_merch_repo(merchant_id)
+    sales_engine.merchants.merchant_array.find_all do |merchant|
+      merchant.id == merchant_id
+    end[0]
   end
 
-  def transactions_from_transaction_repo
-    sales_engine.transactions.transaction_array
+  def transactions_from_transaction_repo(id)
+    transactions = sales_engine.transactions.transaction_array
+    transactions.find_all do |transaction|
+      transaction.invoice_id == id
+    end
   end
 
-  def customers_from_customer_repo
-    sales_engine.customers.customer_array
+  def customers_from_customer_repo(customer_id)
+    sales_engine.customers.customer_array.find do |customer|
+      customer.id == customer_id
+    end
   end
 
-  def invoice_items_from_inv_item_array
-    sales_engine.invoice_items.invoice_item_array
+  def invoice_items_from_inv_item_array(id)
+    inv_items = sales_engine.invoice_items.invoice_item_array
+    inv_items.find_all do |invoice_item|
+      invoice_item.invoice_id == id
+    end
   end
 
   def all
@@ -34,9 +44,7 @@ class InvoiceRepository
   end
 
   def find_by_id(id)
-    invoice_array.find do |invoice|
-      invoice.id == id
-    end
+    invoice_array.find {|invoice| invoice.id == id }
   end
 
   def find_all_by_customer_id(customer_id)
@@ -52,9 +60,7 @@ class InvoiceRepository
   end
 
   def find_all_by_status(status)
-    invoice_array.find_all do |invoice|
-      invoice.status == status
-    end
+    invoice_array.find_all {|invoice| invoice.status == status }
   end
 
   def inspect

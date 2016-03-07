@@ -6,61 +6,46 @@ class Invoice
               :created_at, :updated_at, :invoice_repo
 
   def initialize(invoice_data, invoice_repo = nil)
-    @id = invoice_data[:id]
-    @customer_id = invoice_data[:customer_id]
-    @merchant_id = invoice_data[:merchant_id]
-    @status = invoice_data[:status]
-    @created_at = invoice_data[:created_at]
-    @updated_at = invoice_data[:updated_at]
+    @id           = invoice_data[:id]
+    @customer_id  = invoice_data[:customer_id]
+    @merchant_id  = invoice_data[:merchant_id]
+    @status       = invoice_data[:status]
+    @created_at   = invoice_data[:created_at]
+    @updated_at   = invoice_data[:updated_at]
     @invoice_repo = invoice_repo
   end
 
   def merchant
-    invoice_repo.merchants_from_merch_repo.find_all do |merchant|
-      merchant.id == merchant_id
-    end[0]
+    invoice_repo.merchants_from_merch_repo(merchant_id)
   end
 
   def items
-    invoice_item_objects = invoice_repo.sales_engine.invoice_items.invoice_item_array
-    matching_invoice_items = invoice_item_objects.find_all do |invoice_item|
-      invoice_item.invoice_id == id
-    end
-
-    x = matching_invoice_items.map do |invoice_item|
-      invoice_item.find_item
-    end
+    invoice_items.map {|invoice_item| invoice_item.find_item}
   end
 
   def transactions
-    x = invoice_repo.transactions_from_transaction_repo.find_all do |transaction|
-      transaction.invoice_id == id
-    end
+    invoice_repo.transactions_from_transaction_repo(id)
   end
 
   def customer
-    x = invoice_repo.customers_from_customer_repo.find do |customer|
-    customer.id == customer_id
-    end
+    invoice_repo.customers_from_customer_repo(customer_id)
   end
 
   def is_paid_in_full?
-    x = transactions.any? do |transaction|
+    transactions.any? do |transaction|
       transaction.result == "success"
     end
   end
 
   def invoice_items
-    invoice_repo.invoice_items_from_inv_item_array.find_all do |invoice_item|
-      invoice_item.invoice_id == id
-    end
+    invoice_repo.invoice_items_from_inv_item_array(id)
   end
 
   def total
     invoice_items.reduce(0) do |total, invoice_item|
       total += (invoice_item.unit_price * invoice_item.quantity)
     end
-    # require "pry"; binding.pry
+    #reminder
   end
 
 end
