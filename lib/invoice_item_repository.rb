@@ -2,12 +2,14 @@ require 'csv'
 require_relative 'invoice_item'
 require 'bigdecimal'
 require 'pry'
+require_relative 'loader'
 
 class InvoiceItemRepository
-  attr_reader :invoice_item_array
+  attr_reader :invoice_item_array, :sales_engine
 
-  def initialize
+  def initialize(sales_engine)
     @invoice_item_array = []
+    @sales_engine ||= sales_engine
   end
 
   def searching_for_merchants
@@ -16,6 +18,12 @@ class InvoiceItemRepository
 
   def inspect
     "#<#{self.class} #{@invoice_item_array.size} rows>"
+  end
+
+  def items_from_item_repo(item_id)
+    sales_engine.items.item_array.find do |item|
+      item.id == item_id
+    end
   end
 
   def all
@@ -41,19 +49,34 @@ class InvoiceItemRepository
   end
 
   def load_csv(invoice_item_file)
-    contents = CSV.open "#{invoice_item_file}", headers: true, header_converters: :symbol
+    if invoice_item_array.empty?
+      contents = FileLoader.load_csv(invoice_item_file)
+      csv_contents_parser(contents)
+    end
+  end
+
+  def instance_generator(data)
+    @invoice_item_array << InvoiceItem.new({
+                   id:         data[0],
+                   item_id:    data[1],
+                   invoice_id: data[2],
+                   quantity:   data[3],
+                   unit_price: data[4],
+                   created_at: data[5],
+                   updated_at: data[6]},self)
+  end
+
+  def csv_contents_parser(contents)
     contents.each do |row|
-      # @invoice_array << Invoice.new(row)
-
-      id = row[:id].to_i
-      item_id = row[:item_id].to_i
-      invoice_id = row[:invoice_id].to_i
-      quantity = row[:quantity].to_i
-      unit_price = BigDecimal.new(row[:unit_price])/100
-      created_at = Time.parse(row[:created_at])
-      updated_at = Time.parse(row[:updated_at])
-
-      @invoice_item_array << InvoiceItem.new({id: id, item_id: item_id, invoice_id: invoice_id, quantity: quantity, unit_price: unit_price, created_at: created_at, updated_at: updated_at})
+      data = []
+      data << row[:id].to_i
+      data << row[:item_id].to_i
+      data << row[:invoice_id].to_i
+      data << row[:quantity].to_i
+      data << BigDecimal.new(row[:unit_price])/100
+      data << Time.parse(row[:created_at])
+      data << Time.parse(row[:updated_at])
+      instance_generator(data)
     end
   end
 

@@ -6,31 +6,20 @@ require 'time'
 
 class ItemRepository
   attr_reader :item_array, :sales_engine
+
   def initialize(sales_engine)
     @item_array = []
     @sales_engine ||= sales_engine
   end
 
-  def searching_for_merchants
-    sales_engine.merchants.merchant_array
+  def searching_for_merchants(merchant_id)
+    sales_engine.merchants.merchant_array.find do |merchant|
+      merchant.id == merchant_id
+    end
   end
 
   def inspect
     "#<#{self.class} #{@item_array.size} rows>"
-  end
-
-  def load_csv(items_file)
-    contents = CSV.open "#{items_file}", headers: true, header_converters: :symbol
-    contents.each do |row|
-      id = row[:id].to_i
-      name = row[:name]
-      description = row[:description]
-      unit_price = BigDecimal.new(row[:unit_price])/100
-      created_at = Time.parse(row[:created_at])
-      updated_at = Time.parse(row[:updated_at])
-      merchant_id = row[:merchant_id].to_i
-      @item_array << Item.new({:id => id, :name => name, :description => description, :unit_price => unit_price, :created_at => created_at, :updated_at => updated_at, :merchant_id => merchant_id}, self)
-    end
   end
 
   def all
@@ -72,4 +61,37 @@ class ItemRepository
       item.merchant_id == merchant_id
     end
   end
+
+  def load_csv(items_file)
+    if item_array.empty?
+      contents = FileLoader.load_csv(items_file)
+      csv_contents_loader(contents)
+    end
+  end
+
+  def instance_loader(data)
+    @item_array << Item.new({
+        id:          data[0],
+        name:        data[1],
+        description: data[2],
+        unit_price:  data[3],
+        created_at:  data[4],
+        updated_at:  data[5],
+        merchant_id: data[6]}, self)
+  end
+
+  def csv_contents_loader(contents)
+    contents.each do |row|
+      data = []
+      data << row[:id].to_i
+      data << row[:name]
+      data << row[:description]
+      data << BigDecimal.new(row[:unit_price])/100
+      data << Time.parse(row[:created_at])
+      data << Time.parse(row[:updated_at])
+      data << row[:merchant_id].to_i
+      instance_loader(data)
+    end
+  end
+
 end

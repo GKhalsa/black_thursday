@@ -7,11 +7,13 @@ require_relative '../lib/sales_engine'
 class MerchantRepositoryTest < Minitest::Test
   def setup
     @se ||= SalesEngine.from_csv({
-                  :items     => "./data/items.csv",
-                  :merchants => "./data/merchants.csv",
-                  :invoices => "./data/invoices.csv",
-                  :invoice_items => "./data/invoice_items.csv"
-                              })
+        :items     => "./data/items.csv",
+        :merchants => "./data/merchants.csv",
+        :invoices => "./data/invoices.csv",
+        :invoice_items => "./data/invoice_items.csv",
+        :transactions => "./data/transactions.csv",
+        :customers => "./data/customers.csv"
+                    })
   end
 
   def test_can_it_find_a_merchant_by_name
@@ -34,7 +36,6 @@ class MerchantRepositoryTest < Minitest::Test
     assert_equal merchant[4], mr.find_by_name("Keckenbauer")
     assert_equal merchant[6], mr.find_by_name("GoldenRayPress")
   end
-
   def test_merchant_repo_can_find_by_id
     mr = @se.merchants
     merchant = mr.find_by_id("12334105")

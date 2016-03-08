@@ -10,7 +10,9 @@ class InvoiceItemRepositoryTest < Minitest::Test
       :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",
       :invoices => "./data/invoices.csv",
-      :invoice_items => "./data/invoice_items.csv"
+      :invoice_items => "./data/invoice_items.csv",
+      :transactions => "./data/transactions.csv",
+      :customers => "./data/customers.csv"
       })
   end
 
@@ -32,10 +34,9 @@ class InvoiceItemRepositoryTest < Minitest::Test
     assert_equal 25, invoice_items.count
   end
 
-  meta blah:true
   def test_can_find_all_invoice_items_by_invoice_id
     inv_item_repo = @se.invoice_items
     invoice_items = inv_item_repo.find_all_by_invoice_id(10)
     assert_equal 5, invoice_items.count
-  end 
+  end
 end
