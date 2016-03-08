@@ -2,6 +2,7 @@ require "minitest/autorun"
 require "minitest/pride"
 require_relative "../lib/invoice_repository"
 require_relative "../lib/sales_engine"
+require 'time'
 
 class InvoiceRepositoryTest < Minitest::Test
 
@@ -10,7 +11,7 @@ class InvoiceRepositoryTest < Minitest::Test
       :items => "./data/items.csv",
       :merchants => "./data/merchants.csv",
       :invoices => "./data/invoices.csv",
-      :invoice_items => "./fixtures/invoice_items_fixture.csv",
+      :invoice_items => "./data/invoice_items.csv",
       :transactions => "./data/transactions.csv",
       :customers => "./data/customers.csv"
       })
@@ -44,6 +45,13 @@ class InvoiceRepositoryTest < Minitest::Test
     inv_repo = @se.invoices
     invoice = inv_repo.find_all_by_status(:pending)
     assert_equal 1473, invoice.count
+  end
+
+  def test_can_find_all_by_created_at
+    date = Time.parse("2009-02-07")
+    inv_repo = @se.invoices
+    invoices = inv_repo.find_all_by_created_at(date)
+    assert_equal 1, invoices.count
   end
 
 end

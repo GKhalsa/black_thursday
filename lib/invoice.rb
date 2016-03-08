@@ -37,6 +37,12 @@ class Invoice
     end
   end
 
+  def is_pending?
+    transactions.all? do |transaction|
+      transaction.result == "failed"
+    end
+  end
+
   def invoice_items
     invoice_repo.invoice_items_from_inv_item_array(id)
   end

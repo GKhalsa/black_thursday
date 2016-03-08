@@ -143,4 +143,33 @@ class SalesAnalyst
    (percentage * 100).round(2)
   end
 
+  def total_revenue_by_date(date)
+    invoices = sales_engine.invoices.find_all_by_created_at(date)
+    invoices.reduce(0) do |sum, invoice|
+      sum += invoice.total
+    end
+  end
+
+  def top_revenue_earners(number_of = 20)
+    x = sales_engine.merchants.merchant_array.map do |merchant|
+      merchant.total_revenue
+      merchant
+    end
+    x.sort_by do |merchant_object|
+      -merchant_object.merchant_total_revenue
+    end[0..(number_of - 1)]
+  end
+
+  def merchants_with_pending_invoices
+    sales_engine.merchants.merchant_array.find_all do |merchant|
+      merchant.are_invoices_pending?
+    end
+  end
+
+  def merchants_with_only_one_item
+
+  end
+
+
+
 end

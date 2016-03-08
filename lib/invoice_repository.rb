@@ -34,7 +34,7 @@ class InvoiceRepository
 
   def invoice_items_from_inv_item_array(id)
     inv_items = sales_engine.invoice_items.invoice_item_array
-    inv_items.find_all do |invoice_item|
+    x = inv_items.find_all do |invoice_item|
       invoice_item.invoice_id == id
     end
   end
@@ -61,6 +61,10 @@ class InvoiceRepository
 
   def find_all_by_status(status)
     invoice_array.find_all {|invoice| invoice.status == status }
+  end
+
+  def find_all_by_created_at(date)
+    invoice_array.find_all {|invoice| invoice.created_at == date}
   end
 
   def inspect

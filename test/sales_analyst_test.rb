@@ -2,6 +2,7 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require_relative '../lib/sales_analyst'
 require_relative '../lib/sales_engine'
+require 'time'
 
 
 class SalesAnalystTest < Minitest::Test
@@ -16,7 +17,7 @@ class SalesAnalystTest < Minitest::Test
       :transactions  => "./data/transactions.csv",
       :customers     => "./data/customers.csv"
       })
-    @sa = SalesAnalyst.new(se)
+    @sa ||= SalesAnalyst.new(se)
   end
 
   def test_sales_analyst_class_exists
@@ -85,6 +86,29 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 29.55, sa.invoice_status(:pending)
     assert_equal 56.95, sa.invoice_status(:shipped)
     assert_equal 13.5, sa.invoice_status(:returned)
+  end
+
+  def test_total_revenue_by_date
+    date = Time.parse("2009-02-07")
+    assert_equal 21067.77, sa.total_revenue_by_date(date).to_f
+  end
+
+  def test_top_x_performing_merchants_by_revenue
+    assert_equal 10, sa.top_revenue_earners(10).count
+    assert_equal 109457.76, sa.top_revenue_earners(10)[0].merchant_total_revenue.to_f
+  end
+
+  def test_top_20_performing_merchants_by_revenue_by_default
+    assert_equal 20, sa.top_revenue_earners.count
+    assert_equal 109457.76, sa.top_revenue_earners[0].merchant_total_revenue.to_f
+  end
+
+  def test_merchants_with_pending_invoices
+    assert_equal 467, sa.merchants_with_pending_invoices.count
+  end
+
+  def test_merchants_with_only_one_item
+    assert_equal 199, sa.merchants_with_only_one_item.count
   end
 
 end
