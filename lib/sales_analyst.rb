@@ -151,13 +151,17 @@ class SalesAnalyst
   end
 
   def top_revenue_earners(number_of = 20)
-    x = sales_engine.merchants.merchant_array.map do |merchant|
-      merchant.total_revenue
-      merchant
-    end
+    x = sales_engine.merchants.merchant_array
     x.sort_by do |merchant_object|
-      -merchant_object.merchant_total_revenue
-    end[0..(number_of - 1)]
+      merchant_object.merchant_total_revenue
+    end.reverse[0..(number_of - 1)]
+  end
+
+  def merchants_ranked_by_revenue
+    x = sales_engine.merchants.merchant_array
+    x.sort_by do |merchant_object|
+      merchant_object.merchant_total_revenue
+    end.reverse
   end
 
   def merchants_with_pending_invoices
@@ -190,7 +194,7 @@ class SalesAnalyst
 
   def best_item_for_merchant(id)
     merchant = sales_engine.merchants.find_by_id(id)
-    merchant.best_item
+    merchant.best_item_sales
   end
 
 

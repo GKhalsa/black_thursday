@@ -1,4 +1,5 @@
 require 'pry'
+
 class Merchant
   attr_accessor :name, :id, :merchant_repo,
                 :merchant_total_revenue, :created_at
@@ -20,7 +21,7 @@ class Merchant
   end
 
   def invoice_items
-    invoices.map(&:invoice_items)
+    invoices.map(&:invoice_items).compact
   end
 
   def are_invoices_pending?
@@ -42,13 +43,23 @@ class Merchant
   end
 
   def most_sold_item
-    invoice_items.flatten.find_all do |invoice_item|
+    x = invoice_items.flatten.find_all do |invoice_item|
       invoice_item.quantity == most_sold_item_num
+    end
+    x.map(&:find_item)
+  end
+
+  def give_invoice_items_their_total
+    invoice_items.flatten.each do |invoice_item|
+      invoice_item.find_total
     end
   end
 
-  def best_item
-    #go through the invoice items then 
+  def best_item_sales
+    give_invoice_items_their_total
+    x = invoice_items.flatten.max_by do |invoice_item|
+      invoice_item.total
+    end.find_item
   end
 
   def customers
@@ -56,6 +67,7 @@ class Merchant
   end
 
   def total_revenue
+    # invoices.delete_if == invoices.is_pending?
     revenue = invoices.reduce(0) do |sum, invoice|
       sum += invoice.total
     #maybe create a module that adds up invoices, called in lots of places
@@ -63,5 +75,9 @@ class Merchant
     @merchant_total_revenue += revenue
   end
 
+  def merchant_total_revenue
+    total_revenue
+    @merchant_total_revenue
+  end
 
 end

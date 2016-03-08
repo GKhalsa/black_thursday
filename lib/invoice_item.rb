@@ -24,8 +24,7 @@ class InvoiceItem
   end
 
   def find_total
-    total += unit_price * quantity
-    require "pry"; binding.pry
+    @total += (unit_price * quantity).to_f
   end
 
 end

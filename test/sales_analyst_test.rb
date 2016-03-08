@@ -90,17 +90,16 @@ class SalesAnalystTest < Minitest::Test
 
   def test_total_revenue_by_date
     date = Time.parse("2009-02-07")
-    assert_equal 21067.77, sa.total_revenue_by_date(date).to_f
+    assert_equal 6838064.02, sa.total_revenue_by_date(date).to_f
   end
-
   def test_top_x_performing_merchants_by_revenue
     assert_equal 10, sa.top_revenue_earners(10).count
-    assert_equal 109457.76, sa.top_revenue_earners(10)[0].merchant_total_revenue.to_f
+    assert_equal 12335938, sa.top_revenue_earners(10)[0].id
   end
 
   def test_top_20_performing_merchants_by_revenue_by_default
     assert_equal 20, sa.top_revenue_earners.count
-    assert_equal 109457.76, sa.top_revenue_earners[0].merchant_total_revenue.to_f
+    assert_equal 20829891.45, sa.top_revenue_earners[0].merchant_total_revenue.to_f
   end
 
   def test_merchants_with_pending_invoices
@@ -116,17 +115,17 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_total_revenue_for_single_merchant
-    assert_equal 97979.37, sa.revenue_by_merchant(12334194).to_f
+    assert_equal 81572.4, sa.revenue_by_merchant(12334194).to_f
   end
 
-  meta mets:true
   def test_best_selling_item_by_merchant
-    assert_equal 2830, sa.most_sold_item_for_merchant(12334189)[0].id
-    assert_equal 4502, sa.most_sold_item_for_merchant(12334189)[-1].id
+    assert_equal 1, sa.most_sold_item_for_merchant(12334189).count
+    assert_equal 263524984, sa.most_sold_item_for_merchant(12334189)[0].id
   end
 
+  meta big:true
   def test_best_item_for_merchant
-    assert_equal 1, sa.best_item_for_merchant(12334189)
+    assert_equal 263516130, sa.best_item_for_merchant(12334189).id
   end
 
 
