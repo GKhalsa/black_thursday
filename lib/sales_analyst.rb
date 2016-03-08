@@ -167,9 +167,26 @@ class SalesAnalyst
   end
 
   def merchants_with_only_one_item
-
+    sales_engine.merchants.merchant_array.find_all do |merchant|
+      merchant.items.count == 1
+    end
   end
 
+  def merchants_with_only_one_item_registered_in_month(month)
+    sales_engine.merchants.merchant_array.find_all do |merchant|
+      merchant.creation_date_items(month) == 1
+    end
+  end
+
+  def revenue_by_merchant(id)
+    merchant = sales_engine.merchants.find_by_id(id)
+    merchant.total_revenue
+  end
+
+  def most_sold_item_for_merchant(id)
+    merchant = sales_engine.merchants.find_by_id(id)
+    merchant.most_sold_item
+  end
 
 
 end
