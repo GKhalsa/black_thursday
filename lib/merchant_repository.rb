@@ -2,6 +2,7 @@ require 'csv'
 require_relative 'merchants'
 require 'pry'
 require_relative 'loader'
+require 'time'
 
 class MerchantRepository
   attr_reader :merchant_array, :sales_engine
@@ -55,9 +56,11 @@ class MerchantRepository
     contents.each do |row|
       id = row[:id].to_i
       name = row[:name]
+      created_at = Time.parse(row[:created_at])
       @merchant_array << Merchant.new({
                         :id   => id,
-                        :name => name}, self)
+                        :name => name,
+                        :created_at => created_at}, self)
     end
   end
 

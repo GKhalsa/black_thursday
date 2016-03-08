@@ -13,7 +13,7 @@ class SalesAnalystTest < Minitest::Test
       :items         => "./data/items.csv",
       :merchants     => "./data/merchants.csv",
       :invoices      => "./data/invoices.csv",
-      :invoice_items => "./fixtures/invoice_items_fixture.csv",
+      :invoice_items => "./data/invoice_items.csv",
       :transactions  => "./data/transactions.csv",
       :customers     => "./data/customers.csv"
       })
@@ -108,7 +108,21 @@ class SalesAnalystTest < Minitest::Test
   end
 
   def test_merchants_with_only_one_item
-    assert_equal 199, sa.merchants_with_only_one_item.count
+    assert_equal 243, sa.merchants_with_only_one_item.count
   end
+
+  def test_merchants_with_only_one_item_registered_in_month
+    assert_equal 21, sa.merchants_with_only_one_item_registered_in_month("March").count
+  end
+
+  def test_total_revenue_for_single_merchant
+    assert_equal 97979.37, sa.revenue_by_merchant(12334194).to_f
+  end
+
+  meta mets:true
+  def test_best_selling_item_by_merchant
+    assert_equal [], sa.most_sold_item_for_merchant(12334189)
+  end
+
 
 end
