@@ -44,14 +44,19 @@ class Invoice
   end
 
   def invoice_items
-    invoice_repo.invoice_items_from_inv_item_array(id)
+    if is_paid_in_full?
+      invoice_repo.invoice_items_from_inv_item_array(id)
+    end
   end
 
   def total
-    invoice_items.reduce(0) do |total, invoice_item|
-      total += (invoice_item.unit_price * invoice_item.quantity)
+    if is_paid_in_full?
+      invoice_items.reduce(0) do |total, invoice_item|
+        total += (invoice_item.unit_price * invoice_item.quantity)
+      end
+    else
+      0
     end
-    #reminder
   end
 
 end
