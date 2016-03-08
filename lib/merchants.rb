@@ -19,6 +19,10 @@ class Merchant
     merchant_repo.invoices_from_invoice_repo(id)
   end
 
+  def invoice_items
+    invoices.map(&:invoice_items)
+  end
+
   def are_invoices_pending?
     invoices.any? do |invoice|
       invoice.is_pending?
@@ -31,19 +35,20 @@ class Merchant
     end
   end
 
-  def most_sold_item
-    x = invoices.map do |invoice|
-      invoice.invoice_items
-    end
-    y = x.flatten.max_by do |invoice_item|
+  def most_sold_item_num
+    invoice_items.flatten.max_by do |invoice_item|
       invoice_item.quantity
     end.quantity
-    z = x.flatten.find_all do |invoice_item|
-      invoice_item.quantity == y
-    end
+  end
 
-    binding.pry
-    #refactor!!
+  def most_sold_item
+    invoice_items.flatten.find_all do |invoice_item|
+      invoice_item.quantity == most_sold_item_num
+    end
+  end
+
+  def best_item
+    #go through the invoice items then 
   end
 
   def customers

@@ -188,5 +188,10 @@ class SalesAnalyst
     merchant.most_sold_item
   end
 
+  def best_item_for_merchant(id)
+    merchant = sales_engine.merchants.find_by_id(id)
+    merchant.best_item
+  end
+
 
 end

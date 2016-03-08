@@ -121,7 +121,12 @@ class SalesAnalystTest < Minitest::Test
 
   meta mets:true
   def test_best_selling_item_by_merchant
-    assert_equal [], sa.most_sold_item_for_merchant(12334189)
+    assert_equal 2830, sa.most_sold_item_for_merchant(12334189)[0].id
+    assert_equal 4502, sa.most_sold_item_for_merchant(12334189)[-1].id
+  end
+
+  def test_best_item_for_merchant
+    assert_equal 1, sa.best_item_for_merchant(12334189)
   end
 
 
