@@ -2,93 +2,105 @@ require 'pry'
 require 'time'
 
 class SalesAnalyst
-  attr_reader :sales_engine, :items_per_merchant,
-              :average_average_prices, :merchant_invoices
+  attr_reader :sales_engine,
+              :merchant_invoices
 
   def initialize(sales_engine)
     @sales_engine ||= sales_engine
   end
 
+  def merchant_array
+    sales_engine.merchants.merchant_array
+  end
+
+  def item_array
+    sales_engine.items.item_array
+  end
+
   def average_items_per_merchant
-    @items_per_merchant = []
-    sales_engine.merchants.merchant_array.each do |merchant|
-      items_per_merchant << merchant.items.count
-    end
-    (items_per_merchant.reduce(:+)/items_per_merchant.count.to_f).round(2)
+    ((item_array.count)/(merchant_array.count.to_f)).round(2)
+  end
+
+  def num_of_items_per_merchant
+    merchant_array.map {|merchant| merchant.items.count}
+  end
+
+  def fetch_merchant(id)
+    sales_engine.merchants.find_by_id(id)
+  end
+
+  def invoice_array
+    sales_engine.invoices.invoice_array
+  end
+
+  def average_items_per_merchant_standard_deviation
+    mean = average_items_per_merchant
+    items = num_of_items_per_merchant
+    awesome_deviation_maker(mean,items)
   end
 
 
   def merchants_with_high_item_count
-    high_item_count = average_items_per_merchant + average_items_per_merchant_standard_deviation
+    deviation = average_items_per_merchant_standard_deviation
+    high_item_count = average_items_per_merchant + deviation
 
-    sales_engine.merchants.merchant_array.find_all do |merchant|
+    merchant_array.find_all do |merchant|
       merchant.items.count > high_item_count
     end
   end
 
   def average_item_price_for_merchant(merchant_id)
-    merchant = sales_engine.merchants.find_by_id(merchant_id)
-    merchant_items = merchant.items
-    prices = []
-    merchant_items.each do |merchant_item|
-      prices << merchant_item.unit_price
+    merchant = fetch_merchant(merchant_id)
+    unrounded = (merchant.items.reduce(0) do |sum, item|
+      sum += item.unit_price.to_f
+    end)/(merchant.items.count)
+    unrounded.round(2)
+  end
+
+  def average_merchant_prices
+    merchant_array.map do |merchant|
+      average_item_price_for_merchant(merchant.id)
     end
-    (prices.reduce(:+)/prices.count).round(2)
   end
 
   def average_average_price_per_merchant
-    @average_average_prices= []
-    sales_engine.merchants.merchant_array.each do |merchant|
-      merch_id = merchant.id
-      average_average_prices << average_item_price_for_merchant(merch_id)
-    end
-    (average_average_prices.reduce(:+)/average_average_prices.count).round(2)
+    avg_total = average_merchant_prices.reduce(:+)
+    (avg_total/average_merchant_prices.count).round(2)
   end
-
-  def average_items_per_merchant_standard_deviation
-    mean = average_items_per_merchant
-    num_of_items_squared = []
-    items_per_merchant.each do |num_of_items|
-      num_of_items_squared << (num_of_items - mean) ** 2
-    end
-    x = (num_of_items_squared.reduce(:+)/(items_per_merchant.count - 1.to_f))
-    Math.sqrt(x).round(2)
-  end
-
 
   def average_item_price_standard_deviation
     mean = average_average_price_per_merchant
-    prices = []
-    prices_minused_and_squared = []
-    sales_engine.items.item_array.group_by do |item|
-      prices << item.unit_price
-    end
-    prices.each do |price|
-      prices_minused_and_squared << (price - mean) ** 2
-    end
-    x = (prices_minused_and_squared.reduce(:+)/(prices.count - 1.to_f))
-    Math.sqrt(x).round(2)
+    items = item_array.map(&:unit_price)
+    awesome_deviation_maker(mean,items)
+  end
+
+  def awesome_deviation_maker(mean, items)
+    pre_deviation = (items.reduce(0) do |acc, avg_num|
+      acc + ((avg_num - mean) ** 2)
+    end)/(items.count - 1).to_f
+
+    Math.sqrt(pre_deviation).round(2)
   end
 
   def golden_items
-    golden_item_price = (average_item_price_standard_deviation * 2) + average_average_price_per_merchant
-    sales_engine.items.item_array.find_all do |item|
-      item.unit_price > golden_item_price
+    deviation = (average_item_price_standard_deviation * 2)
+    golden_price = deviation + average_average_price_per_merchant
+    item_array.find_all do |item|
+      item.unit_price > golden_price
     end
   end
 
   def average_invoices_per_merchant
-    @merchant_invoices = []
-    sales_engine.merchants.merchant_array.each do |merchant|
-      merchant_invoices << merchant.invoices.count
-    end
-    (merchant_invoices.reduce(:+)/merchant_invoices.count.to_f).round(2)
+    ((invoice_array.count)/(merchant_array.count.to_f)).round(2)
   end
 
+  def invoices_per_merchant
+    merchant_array.map { |merchant| merchant.invoices.count }
+  end
 
   def average_invoices_per_merchant_standard_deviation
     mean = average_invoices_per_merchant
-    invoices = merchant_invoices
+    invoices = invoices_per_merchant
     awesome_deviation_maker(mean, invoices)
   end
 
@@ -108,13 +120,6 @@ class SalesAnalyst
     end
   end
 
-  def awesome_deviation_maker(mean, avg_items)
-    pre_deviation = (avg_items.reduce(0) do |acc, avg_num|
-      acc + ((avg_num - mean) ** 2)
-    end)/(avg_items.count - 1).to_f
-
-    Math.sqrt(pre_deviation).round(2)
-  end
 
   def invoice_count_per_day_hash
     sales_engine.invoices.invoice_array.reduce(Hash.new(0)) do |days, invoice|

@@ -27,7 +27,6 @@ class SalesAnalystTest < Minitest::Test
   def test_sales_analyst_is_initialzed_with_an_instance_of_sales_engine
     assert_equal SalesEngine, sa.sales_engine.class
   end
-
   def test_average_items_per_merchant
     assert_equal 2.88, sa.average_items_per_merchant
   end
@@ -57,6 +56,7 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 10.49, sa.average_invoices_per_merchant
   end
 
+  meta refactor:true
   def test_average_invoices_per_merchant_standard_deviation
     assert_equal 3.29, sa.average_invoices_per_merchant_standard_deviation
   end
@@ -118,12 +118,12 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 81572.4, sa.revenue_by_merchant(12334194).to_f
   end
 
+  meta big:true
   def test_best_selling_item_by_merchant
     assert_equal 1, sa.most_sold_item_for_merchant(12334189).count
     assert_equal 263524984, sa.most_sold_item_for_merchant(12334189)[0].id
   end
 
-  meta big:true
   def test_best_item_for_merchant
     assert_equal 263516130, sa.best_item_for_merchant(12334189).id
   end
