@@ -21,7 +21,6 @@ class Merchant
   end
 
   def invoice_items
-    binding.pry
     invoices.map(&:invoice_items).compact
   end
 
@@ -44,7 +43,6 @@ class Merchant
   end
 
   def most_sold_item
-    binding.pry
     x = invoice_items.flatten.find_all do |invoice_item|
       invoice_item.quantity == most_sold_item_num
     end
