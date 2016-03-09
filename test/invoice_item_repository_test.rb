@@ -2,6 +2,8 @@ require "minitest/autorun"
 require "minitest/pride"
 require_relative "../lib/invoice_item_repository"
 require_relative "../lib/sales_engine"
+require 'simplecov'
+SimpleCov.start
 
 class InvoiceItemRepositoryTest < Minitest::Test
 

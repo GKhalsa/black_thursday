@@ -67,10 +67,8 @@ class Merchant
   end
 
   def total_revenue
-    # invoices.delete_if == invoices.is_pending?
     revenue = invoices.reduce(0) do |sum, invoice|
       sum += invoice.total
-    #maybe create a module that adds up invoices, called in lots of places
     end
     @merchant_total_revenue += revenue
   end

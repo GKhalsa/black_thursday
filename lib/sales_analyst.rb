@@ -16,24 +16,12 @@ class SalesAnalyst
     @invoice_analytics  = InvoiceAnalytics.new(sales_engine)
   end
 
-  def merchant_array
-    sales_engine.merchants.merchant_array
-  end
-
-  def item_array
-    sales_engine.items.item_array
-  end
-
   def average_items_per_merchant
     merchant_analytics.average_items_per_merchant
   end
 
   def num_of_items_per_merchant
     merchant_analytics.num_of_items_per_merchant
-  end
-
-  def invoice_array
-    sales_engine.invoices.invoice_array
   end
 
   def average_items_per_merchant_standard_deviation
@@ -95,12 +83,11 @@ class SalesAnalyst
   end
 
   def top_revenue_earners(number_of = 20)
-    merchant_analytics.top_revenue_earners(number_of) 
+    merchant_analytics.top_revenue_earners(number_of)
   end
 
   def merchants_ranked_by_revenue
     merchant_analytics.merchants_ranked_by_revenue
-    #DO WHAT HORACE DID FOR HASHSES HERE!
   end
 
   def merchants_with_pending_invoices

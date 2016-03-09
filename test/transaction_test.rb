@@ -1,6 +1,8 @@
 require 'minitest/autorun'
 require 'minitest/pride'
 require_relative '../lib/transaction'
+require 'simplecov'
+SimpleCov.start
 
 class TransactionTest < Minitest::Test
   attr_reader :t

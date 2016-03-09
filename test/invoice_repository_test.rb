@@ -3,6 +3,8 @@ require "minitest/pride"
 require_relative "../lib/invoice_repository"
 require_relative "../lib/sales_engine"
 require 'time'
+require 'simplecov'
+SimpleCov.start
 
 class InvoiceRepositoryTest < Minitest::Test
 

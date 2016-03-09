@@ -3,6 +3,8 @@ require 'minitest/pride'
 require_relative '../lib/sales_analyst'
 require_relative '../lib/sales_engine'
 require 'time'
+require 'simplecov'
+SimpleCov.start
 
 class SalesAnalystTest < Minitest::Test
   attr_reader :se, :sa
@@ -59,14 +61,6 @@ meta refactor:true
 
   def test_average_invoices_per_merchant_standard_deviation
     assert_equal 3.29, sa.average_invoices_per_merchant_standard_deviation
-  end
-
-  def test_awesome_deviation
-    mean = 4
-    merch_avg_items = [1,3,6,8,2]
-    expected = 2.92
-    result = sa.awesome_deviation_maker(mean, merch_avg_items)
-    assert_equal expected, result
   end
 
   def test_top_merchants_by_invoice_count

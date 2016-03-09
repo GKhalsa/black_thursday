@@ -1,6 +1,8 @@
 require 'minitest/autorun'
 require 'minitest/pride'
 require_relative '../lib/customer'
+require 'simplecov'
+SimpleCov.start
 
 class CustomerTest < Minitest::Test
   attr_reader :c
@@ -28,7 +30,7 @@ class CustomerTest < Minitest::Test
   end
 
   def test_that_c_has_a_last_name
-    assert_equal "Clarke", c.last_name 
+    assert_equal "Clarke", c.last_name
   end
 
   def test_that_c_has_a_creation_date

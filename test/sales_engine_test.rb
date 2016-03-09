@@ -2,6 +2,8 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require_relative '../lib/sales_engine'
 require 'pry'
+require 'simplecov'
+SimpleCov.start
 
 class SalesEngineTest < Minitest::Test
   def setup
