@@ -1,6 +1,8 @@
 require 'minitest/autorun'
 require 'minitest/pride'
 require_relative '../lib/invoice'
+require 'simplecov'
+SimpleCov.start
 
 class InvoiceTest < Minitest::Test
   attr_reader :invoice

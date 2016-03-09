@@ -3,6 +3,8 @@ require 'minitest/pride'
 require_relative '../lib/sales_engine'
 require 'time'
 require_relative '../lib/deep_insight_connections'
+require 'simplecov'
+SimpleCov.start
 
 class DeepInsightTest < Minitest::Test
   attr_reader :se, :di
