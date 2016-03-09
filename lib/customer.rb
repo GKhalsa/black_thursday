@@ -20,4 +20,10 @@ class Customer
     invoices.map { |invoice| invoice.merchant }
   end
 
+  def broke_sabbath?
+    invoices.any? do |invoice|
+      invoice.created_at.strftime("%A") == "Saturday"
+    end
+  end
+
 end

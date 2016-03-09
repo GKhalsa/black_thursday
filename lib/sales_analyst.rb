@@ -1,201 +1,130 @@
 require 'pry'
 require 'time'
+require_relative 'merchant_analytics'
+require_relative 'item_analytics'
+require_relative 'invoice_analytics'
 
 class SalesAnalyst
-  attr_reader :sales_engine, :items_per_merchant,
-              :average_average_prices, :merchant_invoices
+  attr_reader :sales_engine, :merchant_invoices,
+              :merchant_analytics, :item_analytics,
+              :invoice_analytics
 
   def initialize(sales_engine)
-    @sales_engine ||= sales_engine
+    @sales_engine     ||= sales_engine
+    @merchant_analytics = MerchantAnalytics.new(sales_engine)
+    @item_analytics     = ItemAnalytics.new(sales_engine)
+    @invoice_analytics  = InvoiceAnalytics.new(sales_engine)
+  end
+
+  def merchant_array
+    sales_engine.merchants.merchant_array
+  end
+
+  def item_array
+    sales_engine.items.item_array
   end
 
   def average_items_per_merchant
-    @items_per_merchant = []
-    sales_engine.merchants.merchant_array.each do |merchant|
-      items_per_merchant << merchant.items.count
-    end
-    (items_per_merchant.reduce(:+)/items_per_merchant.count.to_f).round(2)
+    merchant_analytics.average_items_per_merchant
   end
 
-
-  def merchants_with_high_item_count
-    high_item_count = average_items_per_merchant + average_items_per_merchant_standard_deviation
-
-    sales_engine.merchants.merchant_array.find_all do |merchant|
-      merchant.items.count > high_item_count
-    end
+  def num_of_items_per_merchant
+    merchant_analytics.num_of_items_per_merchant
   end
 
-  def average_item_price_for_merchant(merchant_id)
-    merchant = sales_engine.merchants.find_by_id(merchant_id)
-    merchant_items = merchant.items
-    prices = []
-    merchant_items.each do |merchant_item|
-      prices << merchant_item.unit_price
-    end
-    (prices.reduce(:+)/prices.count).round(2)
-  end
-
-  def average_average_price_per_merchant
-    @average_average_prices= []
-    sales_engine.merchants.merchant_array.each do |merchant|
-      merch_id = merchant.id
-      average_average_prices << average_item_price_for_merchant(merch_id)
-    end
-    (average_average_prices.reduce(:+)/average_average_prices.count).round(2)
+  def invoice_array
+    sales_engine.invoices.invoice_array
   end
 
   def average_items_per_merchant_standard_deviation
-    mean = average_items_per_merchant
-    num_of_items_squared = []
-    items_per_merchant.each do |num_of_items|
-      num_of_items_squared << (num_of_items - mean) ** 2
-    end
-    x = (num_of_items_squared.reduce(:+)/(items_per_merchant.count - 1.to_f))
-    Math.sqrt(x).round(2)
+    merchant_analytics.average_items_per_merchant_standard_deviation
+  end
+
+  def merchants_with_high_item_count
+    merchant_analytics.merchants_with_high_item_count
+  end
+
+  def average_item_price_for_merchant(merchant_id)
+    merchant_analytics.average_item_price_for_merchant(merchant_id)
   end
 
 
+  def average_average_price_per_merchant
+    merchant_analytics.average_average_price_per_merchant
+  end
+
   def average_item_price_standard_deviation
-    mean = average_average_price_per_merchant
-    prices = []
-    prices_minused_and_squared = []
-    sales_engine.items.item_array.group_by do |item|
-      prices << item.unit_price
-    end
-    prices.each do |price|
-      prices_minused_and_squared << (price - mean) ** 2
-    end
-    x = (prices_minused_and_squared.reduce(:+)/(prices.count - 1.to_f))
-    Math.sqrt(x).round(2)
+    item_analytics.average_item_price_standard_deviation
   end
 
   def golden_items
-    golden_item_price = (average_item_price_standard_deviation * 2) + average_average_price_per_merchant
-    sales_engine.items.item_array.find_all do |item|
-      item.unit_price > golden_item_price
-    end
+    item_analytics.golden_items
   end
 
   def average_invoices_per_merchant
-    @merchant_invoices = []
-    sales_engine.merchants.merchant_array.each do |merchant|
-      merchant_invoices << merchant.invoices.count
-    end
-    (merchant_invoices.reduce(:+)/merchant_invoices.count.to_f).round(2)
+    merchant_analytics.average_invoices_per_merchant
   end
 
-
   def average_invoices_per_merchant_standard_deviation
-    mean = average_invoices_per_merchant
-    invoices = merchant_invoices
-    awesome_deviation_maker(mean, invoices)
+    merchant_analytics.average_invoices_per_merchant_standard_deviation
   end
 
   def top_merchants_by_invoice_count
-    top_performer_num = (average_invoices_per_merchant_standard_deviation * 2) + average_invoices_per_merchant
+    merchant_analytics.top_merchants_by_invoice_count
 
-    sales_engine.merchants.merchant_array.find_all do |merchant|
-      merchant.invoices.count > top_performer_num
-    end
   end
 
   def bottom_merchants_by_invoice_count
-    bottom_performer_num = average_invoices_per_merchant - (average_invoices_per_merchant_standard_deviation * 2)
-
-    sales_engine.merchants.merchant_array.find_all do |merchant|
-      merchant.invoices.count < bottom_performer_num
-    end
+    merchant_analytics.bottom_merchants_by_invoice_count
   end
 
-  def awesome_deviation_maker(mean, avg_items)
-    pre_deviation = (avg_items.reduce(0) do |acc, avg_num|
-      acc + ((avg_num - mean) ** 2)
-    end)/(avg_items.count - 1).to_f
-
-    Math.sqrt(pre_deviation).round(2)
-  end
-
-  def invoice_count_per_day_hash
-    sales_engine.invoices.invoice_array.reduce(Hash.new(0)) do |days, invoice|
-      invoice_day = invoice.created_at.strftime("%A")
-      days[invoice_day] += 1
-      days
-    end
+  def top_day_deviation
+    invoice_analytics.top_day_deviation
   end
 
   def top_days_by_invoice_count
-    mean = (sales_engine.invoices.invoice_array.count / 7).to_f
-    invoices_per_day = invoice_count_per_day_hash.values
-
-    day_deviation = awesome_deviation_maker(mean, invoices_per_day)
-    invoice_count_per_day_hash.find_all do |day,count|
-      count > (mean + day_deviation)
-    end.map {|day, count| day}
+    invoice_analytics.top_days_by_invoice_count
   end
 
   def invoice_status(status)
-    array_of_invoices = sales_engine.invoices.invoice_array
-    matching_invoice_array = array_of_invoices.find_all do |invoice|
-      invoice.status == status
-    end
-   percentage = ((matching_invoice_array.count.to_f)/(array_of_invoices.count))
-   (percentage * 100).round(2)
+    invoice_analytics.invoice_status(status)
   end
 
   def total_revenue_by_date(date)
-    invoices = sales_engine.invoices.find_all_by_created_at(date)
-    invoices.reduce(0) do |sum, invoice|
-      sum += invoice.total
-    end
+    invoice_analytics.total_revenue_by_date(date)
   end
 
   def top_revenue_earners(number_of = 20)
-    x = sales_engine.merchants.merchant_array
-    x.sort_by do |merchant_object|
-      merchant_object.merchant_total_revenue
-    end.reverse[0..(number_of - 1)]
+    merchant_analytics.top_revenue_earners(number_of) 
   end
 
   def merchants_ranked_by_revenue
-    x = sales_engine.merchants.merchant_array
-    x.sort_by do |merchant_object|
-      merchant_object.merchant_total_revenue
-    end.reverse
+    merchant_analytics.merchants_ranked_by_revenue
+    #DO WHAT HORACE DID FOR HASHSES HERE!
   end
 
   def merchants_with_pending_invoices
-    sales_engine.merchants.merchant_array.find_all do |merchant|
-      merchant.are_invoices_pending?
-    end
+    merchant_analytics.merchants_with_pending_invoices
   end
 
   def merchants_with_only_one_item
-    sales_engine.merchants.merchant_array.find_all do |merchant|
-      merchant.items.count == 1
-    end
+    merchant_analytics.merchants_with_only_one_item
   end
 
   def merchants_with_only_one_item_registered_in_month(month)
-    sales_engine.merchants.merchant_array.find_all do |merchant|
-      merchant.creation_date_items(month) == 1
-    end
+    merchant_analytics.merchants_with_only_one_item_registered_in_month(month)
   end
 
   def revenue_by_merchant(id)
-    merchant = sales_engine.merchants.find_by_id(id)
-    merchant.total_revenue
+    merchant_analytics.revenue_by_merchant(id)
   end
 
   def most_sold_item_for_merchant(id)
-    merchant = sales_engine.merchants.find_by_id(id)
-    merchant.most_sold_item
+    merchant_analytics.most_sold_item_for_merchant(id)
   end
 
   def best_item_for_merchant(id)
-    merchant = sales_engine.merchants.find_by_id(id)
-    merchant.best_item_sales
+    merchant_analytics.best_item_for_merchant(id)
   end
-
 
 end

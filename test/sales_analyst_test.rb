@@ -4,7 +4,6 @@ require_relative '../lib/sales_analyst'
 require_relative '../lib/sales_engine'
 require 'time'
 
-
 class SalesAnalystTest < Minitest::Test
   attr_reader :se, :sa
 
@@ -49,6 +48,7 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 350.29, sa.average_average_price_per_merchant
   end
 
+meta refactor:true
   def test_golden_items
     assert_equal 5, sa.golden_items.count
   end
@@ -92,6 +92,7 @@ class SalesAnalystTest < Minitest::Test
     date = Time.parse("2009-02-07")
     assert_equal 6838064.02, sa.total_revenue_by_date(date).to_f
   end
+
   def test_top_x_performing_merchants_by_revenue
     assert_equal 10, sa.top_revenue_earners(10).count
     assert_equal 12335938, sa.top_revenue_earners(10)[0].id
@@ -123,10 +124,8 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 263524984, sa.most_sold_item_for_merchant(12334189)[0].id
   end
 
-  meta big:true
   def test_best_item_for_merchant
     assert_equal 263516130, sa.best_item_for_merchant(12334189).id
   end
-
 
 end
