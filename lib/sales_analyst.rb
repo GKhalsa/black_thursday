@@ -107,7 +107,7 @@ class SalesAnalyst
   def top_merchants_by_invoice_count
     top_performer_num = (average_invoices_per_merchant_standard_deviation * 2) + average_invoices_per_merchant
 
-    sales_engine.merchants.merchant_array.find_all do |merchant|
+    merchant_array.find_all do |merchant|
       merchant.invoices.count > top_performer_num
     end
   end
@@ -115,14 +115,13 @@ class SalesAnalyst
   def bottom_merchants_by_invoice_count
     bottom_performer_num = average_invoices_per_merchant - (average_invoices_per_merchant_standard_deviation * 2)
 
-    sales_engine.merchants.merchant_array.find_all do |merchant|
+    merchant_array.find_all do |merchant|
       merchant.invoices.count < bottom_performer_num
     end
   end
 
-
   def invoice_count_per_day_hash
-    sales_engine.invoices.invoice_array.reduce(Hash.new(0)) do |days, invoice|
+    invoice_array.reduce(Hash.new(0)) do |days, invoice|
       invoice_day = invoice.created_at.strftime("%A")
       days[invoice_day] += 1
       days
@@ -130,7 +129,7 @@ class SalesAnalyst
   end
 
   def top_days_by_invoice_count
-    mean = (sales_engine.invoices.invoice_array.count / 7).to_f
+    mean = (invoice_array.count / 7).to_f
     invoices_per_day = invoice_count_per_day_hash.values
 
     day_deviation = awesome_deviation_maker(mean, invoices_per_day)
@@ -140,12 +139,15 @@ class SalesAnalyst
   end
 
   def invoice_status(status)
-    array_of_invoices = sales_engine.invoices.invoice_array
-    matching_invoice_array = array_of_invoices.find_all do |invoice|
+    matching_invoice_array = invoice_array.find_all do |invoice|
       invoice.status == status
     end
-   percentage = ((matching_invoice_array.count.to_f)/(array_of_invoices.count))
-   (percentage * 100).round(2)
+    percentage(matching_invoice_array)
+  end
+
+  def percentage(matching_status)
+    x = ((matching_status.count.to_f)/(invoice_array.count))
+    (x * 100).round(2)
   end
 
   def total_revenue_by_date(date)
@@ -170,19 +172,19 @@ class SalesAnalyst
   end
 
   def merchants_with_pending_invoices
-    sales_engine.merchants.merchant_array.find_all do |merchant|
+    merchant_array.find_all do |merchant|
       merchant.are_invoices_pending?
     end
   end
 
   def merchants_with_only_one_item
-    sales_engine.merchants.merchant_array.find_all do |merchant|
+    merchant_array.find_all do |merchant|
       merchant.items.count == 1
     end
   end
 
   def merchants_with_only_one_item_registered_in_month(month)
-    sales_engine.merchants.merchant_array.find_all do |merchant|
+    merchant_array.find_all do |merchant|
       merchant.creation_date_items(month) == 1
     end
   end

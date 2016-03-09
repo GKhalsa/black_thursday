@@ -56,7 +56,6 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 10.49, sa.average_invoices_per_merchant
   end
 
-  meta refactor:true
   def test_average_invoices_per_merchant_standard_deviation
     assert_equal 3.29, sa.average_invoices_per_merchant_standard_deviation
   end
@@ -82,6 +81,7 @@ class SalesAnalystTest < Minitest::Test
     assert_equal "Wednesday", sa.top_days_by_invoice_count[0]
   end
 
+  meta refactor:true
   def test_status_of_invoices
     assert_equal 29.55, sa.invoice_status(:pending)
     assert_equal 56.95, sa.invoice_status(:shipped)
