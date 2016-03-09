@@ -8,8 +8,6 @@ class SalesAnalyst
   def initialize(sales_engine)
     @sales_engine ||= sales_engine
     @merchant_analytics = MerchantAnalytics.new(sales_engine)
-    @deviation = (average_invoices_per_merchant_standard_deviation * 2)
-    @avg_invc = average_invoices_per_merchant
   end
 
   def merchant_array #used
@@ -77,16 +75,13 @@ class SalesAnalyst
     merchant_analytics.average_invoices_per_merchant_standard_deviation
   end
 
-  def top_merchants_by_invoice_count #1
-    merchant_array.find_all do |merchant|
-      merchant.invoices.count > (@deviation + @avg_invc)
-    end
+  def top_merchants_by_invoice_count
+    merchant_analytics.top_merchants_by_invoice_count
+
   end
 
-  def bottom_merchants_by_invoice_count #1
-    merchant_array.find_all do |merchant|
-      merchant.invoices.count < (@avg_invc - @deviation)
-    end
+  def bottom_merchants_by_invoice_count
+    merchant_analytics.bottom_merchants_by_invoice_count
   end
 
   def invoice_count_per_day_hash #3
@@ -129,15 +124,13 @@ class SalesAnalyst
     end
   end
 
-  def top_revenue_earners(number_of = 20) #1
-    rev_rank = merchants_ranked_by_revenue
-    rev_rank[0..(number_of - 1)]
+  def top_revenue_earners(number_of = 20)
+    merchant_analytics.top_revenue_earners(number_of) #1
   end
 
   def merchants_ranked_by_revenue #1
-    merchant_array.sort_by do |merchant_object|
-      merchant_object.merchant_total_revenue
-    end.reverse
+    merchant_analytics.merchants_ranked_by_revenue
+    #DO WHAT HORACE DID FOR HASHSES HERE!
   end
 
   def merchants_with_pending_invoices #1
@@ -177,8 +170,11 @@ end
 
 class MerchantAnalytics
   attr_reader :sales_engine
+
   def initialize(sales_engine)
     @sales_engine = sales_engine
+    @deviation = (average_invoices_per_merchant_standard_deviation * 2)
+    @avg_invc = average_invoices_per_merchant
   end
 
   def merchant_array
@@ -260,6 +256,29 @@ class MerchantAnalytics
     mean = average_invoices_per_merchant
     invoices = invoices_per_merchant
     awesome_deviation_maker(mean, invoices)
+  end
+
+  def top_merchants_by_invoice_count #1
+    merchant_array.find_all do |merchant|
+      merchant.invoices.count > (@deviation + @avg_invc)
+    end
+  end
+
+  def bottom_merchants_by_invoice_count #1
+    merchant_array.find_all do |merchant|
+      merchant.invoices.count < (@avg_invc - @deviation)
+    end
+  end
+
+  def top_revenue_earners(number_of = 20) #1
+    rev_rank = merchants_ranked_by_revenue
+    rev_rank[0..(number_of - 1)]
+  end
+
+  def merchants_ranked_by_revenue #1
+    merchant_array.sort_by do |merchant_object|
+      merchant_object.merchant_total_revenue
+    end.reverse
   end
 
 end

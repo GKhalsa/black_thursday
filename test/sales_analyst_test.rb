@@ -56,7 +56,6 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 10.49, sa.average_invoices_per_merchant
   end
 
-  meta refactor:true
   def test_average_invoices_per_merchant_standard_deviation
     assert_equal 3.29, sa.average_invoices_per_merchant_standard_deviation
   end
@@ -103,6 +102,7 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 20829891.45, sa.top_revenue_earners[0].merchant_total_revenue.to_f
   end
 
+  meta refactor:true
   def test_merchants_with_pending_invoices
     assert_equal 467, sa.merchants_with_pending_invoices.count
   end
