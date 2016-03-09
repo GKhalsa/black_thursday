@@ -4,7 +4,6 @@ require_relative '../lib/sales_analyst'
 require_relative '../lib/sales_engine'
 require 'time'
 
-
 class SalesAnalystTest < Minitest::Test
   attr_reader :se, :sa
 
@@ -27,6 +26,7 @@ class SalesAnalystTest < Minitest::Test
   def test_sales_analyst_is_initialzed_with_an_instance_of_sales_engine
     assert_equal SalesEngine, sa.sales_engine.class
   end
+
   def test_average_items_per_merchant
     assert_equal 2.88, sa.average_items_per_merchant
   end
@@ -48,6 +48,7 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 350.29, sa.average_average_price_per_merchant
   end
 
+meta refactor:true
   def test_golden_items
     assert_equal 5, sa.golden_items.count
   end
@@ -102,7 +103,6 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 20829891.45, sa.top_revenue_earners[0].merchant_total_revenue.to_f
   end
 
-  meta refactor:true
   def test_merchants_with_pending_invoices
     assert_equal 467, sa.merchants_with_pending_invoices.count
   end
@@ -119,7 +119,6 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 81572.4, sa.revenue_by_merchant(12334194).to_f
   end
 
-  meta big:true
   def test_best_selling_item_by_merchant
     assert_equal 1, sa.most_sold_item_for_merchant(12334189).count
     assert_equal 263524984, sa.most_sold_item_for_merchant(12334189)[0].id
@@ -128,6 +127,5 @@ class SalesAnalystTest < Minitest::Test
   def test_best_item_for_merchant
     assert_equal 263516130, sa.best_item_for_merchant(12334189).id
   end
-
 
 end
