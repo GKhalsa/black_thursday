@@ -14,26 +14,26 @@
       <img src="./assets/0.10.0/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" style="display:none;">
-      <div class="timestamp">Generated <abbr class="timeago" title="2016-03-09T15:53:11-07:00">2016-03-09T15:53:11-07:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2016-03-09T19:52:51-07:00">2016-03-09T19:52:51-07:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
         <div class="file_list_container" id="AllFiles">
   <h2>
     <span class="group_name">All Files</span>
-    (<span class="covered_percent"><span class="green">99.38%</span></span>
+    (<span class="covered_percent"><span class="green">99.42%</span></span>
      covered at
      <span class="covered_strength">
        <span class="green">
-         232.23
+         219.19
        </span>
     </span> hits/line)
   </h2>
   <a name="AllFiles"></a>
   <div>
     <b>20</b> files in total.
-    <b>645</b> relevant lines. 
-    <span class="green"><b>641</b> lines covered</span> and
+    <b>686</b> relevant lines. 
+    <span class="green"><b>682</b> lines covered</span> and
     <span class="red"><b>4</b> lines missed </span>
   </div>
   <table class="file_list">
@@ -53,11 +53,11 @@
       <tr>
         <td class="strong"><a href="#4ce23237d5c426d8a05a347ee8474240dec7fab3" class="src_link" title="lib/deep_insight_connections.rb">lib/deep_insight_connections.rb</a></td>
         <td class="green strong">100.0 %</td>
-        <td>31</td>
-        <td>16</td>
-        <td>16</td>
+        <td>79</td>
+        <td>46</td>
+        <td>46</td>
         <td>0</td>
-        <td>1009.6</td>
+        <td>363.3</td>
       </tr>
       
       <tr>
@@ -103,7 +103,7 @@
       <tr>
         <td class="strong"><a href="#5630c94565567e8459b96993d2e1fc947a54c144" class="src_link" title="lib/sales_analyst.rb">lib/sales_analyst.rb</a></td>
         <td class="green strong">93.33 %</td>
-        <td>118</td>
+        <td>117</td>
         <td>60</td>
         <td>56</td>
         <td>4</td>
@@ -123,11 +123,11 @@
       <tr>
         <td class="strong"><a href="#7cc9a3fc3f97b44e16db52dd278aee058b32de62" class="src_link" title="test/deep_insight_test.rb">test/deep_insight_test.rb</a></td>
         <td class="green strong">100.0 %</td>
-        <td>32</td>
-        <td>16</td>
-        <td>16</td>
+        <td>50</td>
+        <td>27</td>
+        <td>27</td>
         <td>0</td>
-        <td>1.1</td>
+        <td>1.4</td>
       </tr>
       
       <tr>
@@ -271,8 +271,8 @@
     <h3>lib/deep_insight_connections.rb</h3>
     <h4><span class="green">100.0 %</span> covered</h4>
     <div>
-      <b>16</b> relevant lines. 
-      <span class="green"><b>16</b> lines covered</span> and
+      <b>46</b> relevant lines. 
+      <span class="green"><b>46</b> lines covered</span> and
       <span class="red"><b>0</b> lines missed.</span>
     </div>
   </div>
@@ -283,55 +283,55 @@
         <li class="covered" data-hits="1" data-linenumber="1">
           <span class="hits">1</span>
           
-          <code class="ruby">class DeepInsight</code>
+          <code class="ruby">require &#39;gender_detector&#39;</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="2">
-          <span class="hits">1</span>
-          
-          <code class="ruby">  attr_reader :sales_engine</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="3">
+        <li class="never" data-hits="" data-linenumber="2">
           
           
           <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="3">
+          <span class="hits">1</span>
+          
+          <code class="ruby">class DeepInsight</code>
         </li>
       
         <li class="covered" data-hits="1" data-linenumber="4">
           <span class="hits">1</span>
           
-          <code class="ruby">  def initialize(sales_engine)</code>
+          <code class="ruby">  attr_reader :sales_engine, :customers, :gender_hash,</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="5">
-          <span class="hits">2</span>
+        <li class="never" data-hits="" data-linenumber="5">
           
-          <code class="ruby">    @sales_engine = sales_engine</code>
+          
+          <code class="ruby">              :male, :female, :male_pop_day, :female_pop_day</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="6">
           
           
-          <code class="ruby">  end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="7">
-          
-          
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="8">
+        <li class="covered" data-hits="1" data-linenumber="7">
           <span class="hits">1</span>
           
-          <code class="ruby">  def customers</code>
+          <code class="ruby">  def initialize(sales_engine)</code>
         </li>
       
-        <li class="covered" data-hits="16" data-linenumber="9">
-          <span class="hits">16</span>
+        <li class="covered" data-hits="6" data-linenumber="8">
+          <span class="hits">6</span>
           
-          <code class="ruby">    sales_engine.customers.customer_array</code>
+          <code class="ruby">    @sales_engine ||= sales_engine</code>
+        </li>
+      
+        <li class="covered" data-hits="6" data-linenumber="9">
+          <span class="hits">6</span>
+          
+          <code class="ruby">    @customers    ||= sales_engine.customers.customer_array</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="10">
@@ -358,10 +358,10 @@
           <code class="ruby">    names = [&quot;ski&quot;,&quot;nader&quot;,&quot;witz&quot;,&quot;berg&quot;,&quot;baum&quot;,&quot;hyatt&quot;,&quot;burg&quot;,&quot;man&quot;]</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="14">
+        <li class="covered" data-hits="2" data-linenumber="14">
+          <span class="hits">2</span>
           
-          
-          <code class="ruby">    names.map do |name|</code>
+          <code class="ruby">    names.flat_map do |name|</code>
         </li>
       
         <li class="covered" data-hits="16" data-linenumber="15">
@@ -370,10 +370,10 @@
           <code class="ruby">      the_gathering_of_the_jews(name)</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="16">
-          <span class="hits">2</span>
+        <li class="never" data-hits="" data-linenumber="16">
           
-          <code class="ruby">    end.flatten</code>
+          
+          <code class="ruby">    end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="17">
@@ -460,7 +460,295 @@
           <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="31">
+        <li class="covered" data-hits="1" data-linenumber="31">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def determine_gender(name)</code>
+        </li>
+      
+        <li class="covered" data-hits="84" data-linenumber="32">
+          <span class="hits">84</span>
+          
+          <code class="ruby">    detector = GenderDetector.new</code>
+        </li>
+      
+        <li class="covered" data-hits="84" data-linenumber="33">
+          <span class="hits">84</span>
+          
+          <code class="ruby">    detector.get_gender(name)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="34">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="35">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="36">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def mapping_customer_to_gender</code>
+        </li>
+      
+        <li class="covered" data-hits="2" data-linenumber="37">
+          <span class="hits">2</span>
+          
+          <code class="ruby">    @gender_hash = {}</code>
+        </li>
+      
+        <li class="covered" data-hits="2" data-linenumber="38">
+          <span class="hits">2</span>
+          
+          <code class="ruby">    x = customers[0..40]</code>
+        </li>
+      
+        <li class="covered" data-hits="2" data-linenumber="39">
+          <span class="hits">2</span>
+          
+          <code class="ruby">    y = x.map do |customer|</code>
+        </li>
+      
+        <li class="covered" data-hits="82" data-linenumber="40">
+          <span class="hits">82</span>
+          
+          <code class="ruby">      gender_hash[customer] = determine_gender(customer.first_name)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="41">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="42">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="43">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="44">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def shopping_days_by_gender</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="45">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    mapping_customer_to_gender</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="46">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    @male   = Hash.new(0)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="47">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    @female = Hash.new(0)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="48">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    @gender_hash.each do |key, value|</code>
+        </li>
+      
+        <li class="covered" data-hits="41" data-linenumber="49">
+          <span class="hits">41</span>
+          
+          <code class="ruby">      if value == :male</code>
+        </li>
+      
+        <li class="covered" data-hits="15" data-linenumber="50">
+          <span class="hits">15</span>
+          
+          <code class="ruby">        add_male_days(key,value)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="51">
+          
+          
+          <code class="ruby">      elsif value == :female</code>
+        </li>
+      
+        <li class="covered" data-hits="23" data-linenumber="52">
+          <span class="hits">23</span>
+          
+          <code class="ruby">        add_female_days(key,value)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="53">
+          
+          
+          <code class="ruby">      end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="54">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="55">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="56">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="57">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def add_female_days(key,value)</code>
+        </li>
+      
+        <li class="covered" data-hits="23" data-linenumber="58">
+          <span class="hits">23</span>
+          
+          <code class="ruby">    days = key.purchasing_days</code>
+        </li>
+      
+        <li class="covered" data-hits="23" data-linenumber="59">
+          <span class="hits">23</span>
+          
+          <code class="ruby">    days.each do |key, value|</code>
+        </li>
+      
+        <li class="covered" data-hits="83" data-linenumber="60">
+          <span class="hits">83</span>
+          
+          <code class="ruby">      female[key] += value</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="61">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="62">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="63">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="64">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def add_male_days(key,value)</code>
+        </li>
+      
+        <li class="covered" data-hits="15" data-linenumber="65">
+          <span class="hits">15</span>
+          
+          <code class="ruby">    days = key.purchasing_days</code>
+        </li>
+      
+        <li class="covered" data-hits="15" data-linenumber="66">
+          <span class="hits">15</span>
+          
+          <code class="ruby">    days.each do |key, value|</code>
+        </li>
+      
+        <li class="covered" data-hits="57" data-linenumber="67">
+          <span class="hits">57</span>
+          
+          <code class="ruby">      male[key] += value</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="68">
+          
+          
+          <code class="ruby">    end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="69">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="70">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="71">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def popular_days</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="72">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    shopping_days_by_gender</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="73">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    male_pop_num = male.values.max</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="74">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    @male_pop_day = male.key(male_pop_num)</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="75">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    female_pop_num = female.values.max</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="76">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    @female_pop_day = female.key(female_pop_num)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="77">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="78">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="79">
           
           
           <code class="ruby">end</code>
@@ -2491,166 +2779,160 @@
         <li class="never" data-hits="" data-linenumber="91">
           
           
-          <code class="ruby">    #DO WHAT HORACE DID FOR HASHSES HERE!</code>
+          <code class="ruby">  end</code>
         </li>
       
         <li class="never" data-hits="" data-linenumber="92">
           
           
-          <code class="ruby">  end</code>
-        </li>
-      
-        <li class="never" data-hits="" data-linenumber="93">
-          
-          
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="94">
+        <li class="covered" data-hits="1" data-linenumber="93">
           <span class="hits">1</span>
           
           <code class="ruby">  def merchants_with_pending_invoices</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="95">
+        <li class="covered" data-hits="1" data-linenumber="94">
           <span class="hits">1</span>
           
           <code class="ruby">    merchant_analytics.merchants_with_pending_invoices</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="96">
+        <li class="never" data-hits="" data-linenumber="95">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="97">
+        <li class="never" data-hits="" data-linenumber="96">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="98">
+        <li class="covered" data-hits="1" data-linenumber="97">
           <span class="hits">1</span>
           
           <code class="ruby">  def merchants_with_only_one_item</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="99">
+        <li class="covered" data-hits="1" data-linenumber="98">
           <span class="hits">1</span>
           
           <code class="ruby">    merchant_analytics.merchants_with_only_one_item</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="100">
+        <li class="never" data-hits="" data-linenumber="99">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="101">
+        <li class="never" data-hits="" data-linenumber="100">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="102">
+        <li class="covered" data-hits="1" data-linenumber="101">
           <span class="hits">1</span>
           
           <code class="ruby">  def merchants_with_only_one_item_registered_in_month(month)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="103">
+        <li class="covered" data-hits="1" data-linenumber="102">
           <span class="hits">1</span>
           
           <code class="ruby">    merchant_analytics.merchants_with_only_one_item_registered_in_month(month)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="104">
+        <li class="never" data-hits="" data-linenumber="103">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="105">
+        <li class="never" data-hits="" data-linenumber="104">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="106">
+        <li class="covered" data-hits="1" data-linenumber="105">
           <span class="hits">1</span>
           
           <code class="ruby">  def revenue_by_merchant(id)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="107">
+        <li class="covered" data-hits="1" data-linenumber="106">
           <span class="hits">1</span>
           
           <code class="ruby">    merchant_analytics.revenue_by_merchant(id)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="108">
+        <li class="never" data-hits="" data-linenumber="107">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="109">
+        <li class="never" data-hits="" data-linenumber="108">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="110">
+        <li class="covered" data-hits="1" data-linenumber="109">
           <span class="hits">1</span>
           
           <code class="ruby">  def most_sold_item_for_merchant(id)</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="111">
+        <li class="covered" data-hits="2" data-linenumber="110">
           <span class="hits">2</span>
           
           <code class="ruby">    merchant_analytics.most_sold_item_for_merchant(id)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="112">
+        <li class="never" data-hits="" data-linenumber="111">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="113">
+        <li class="never" data-hits="" data-linenumber="112">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="114">
+        <li class="covered" data-hits="1" data-linenumber="113">
           <span class="hits">1</span>
           
           <code class="ruby">  def best_item_for_merchant(id)</code>
         </li>
       
-        <li class="covered" data-hits="1" data-linenumber="115">
+        <li class="covered" data-hits="1" data-linenumber="114">
           <span class="hits">1</span>
           
           <code class="ruby">    merchant_analytics.best_item_for_merchant(id)</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="116">
+        <li class="never" data-hits="" data-linenumber="115">
           
           
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="117">
+        <li class="never" data-hits="" data-linenumber="116">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="118">
+        <li class="never" data-hits="" data-linenumber="117">
           
           
           <code class="ruby">end</code>
@@ -2941,8 +3223,8 @@
     <h3>test/deep_insight_test.rb</h3>
     <h4><span class="green">100.0 %</span> covered</h4>
     <div>
-      <b>16</b> relevant lines. 
-      <span class="green"><b>16</b> lines covered</span> and
+      <b>27</b> relevant lines. 
+      <span class="green"><b>27</b> lines covered</span> and
       <span class="red"><b>0</b> lines missed.</span>
     </div>
   </div>
@@ -3064,14 +3346,14 @@
           <code class="ruby">      :customers     =&gt; &quot;./data/customers.csv&quot;</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="20">
-          <span class="hits">2</span>
+        <li class="covered" data-hits="6" data-linenumber="20">
+          <span class="hits">6</span>
           
           <code class="ruby">      })</code>
         </li>
       
-        <li class="covered" data-hits="2" data-linenumber="21">
-          <span class="hits">2</span>
+        <li class="covered" data-hits="6" data-linenumber="21">
+          <span class="hits">6</span>
           
           <code class="ruby">      @di ||= DeepInsight.new(se)</code>
         </li>
@@ -3130,13 +3412,121 @@
           <code class="ruby">  end</code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="31">
+        <li class="covered" data-hits="1" data-linenumber="31">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def test_that_we_can_identify_a_female</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="32">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    assert_equal :female, di.determine_gender(&quot;Sally&quot;)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="33">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="34">
           
           
           <code class="ruby"></code>
         </li>
       
-        <li class="never" data-hits="" data-linenumber="32">
+        <li class="covered" data-hits="1" data-linenumber="35">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def test_that_we_can_identify_a_male</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="36">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    assert_equal :male, di.determine_gender(&quot;Bob&quot;)</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="37">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="38">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="39">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def test_gender_hash</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="40">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    di.mapping_customer_to_gender</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="41">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    assert_equal &quot;Joey&quot;,di.gender_hash.key(:male).first_name</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="42">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="43">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="44">
+          <span class="hits">1</span>
+          
+          <code class="ruby">  def test_most_popular_day_for_man</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="45">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    di.popular_days</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="46">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    assert_equal &quot;Friday&quot;, di.male_pop_day</code>
+        </li>
+      
+        <li class="covered" data-hits="1" data-linenumber="47">
+          <span class="hits">1</span>
+          
+          <code class="ruby">    assert_equal &quot;Sunday&quot;, di.female_pop_day</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="48">
+          
+          
+          <code class="ruby">  end</code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="49">
+          
+          
+          <code class="ruby"></code>
+        </li>
+      
+        <li class="never" data-hits="" data-linenumber="50">
           
           
           <code class="ruby">end</code>
