@@ -9,12 +9,12 @@ class InvoiceItemRepositoryTest < Minitest::Test
 
   def setup
     @se ||= SalesEngine.from_csv({
-      :items => "./data/items.csv",
-      :merchants => "./data/merchants.csv",
-      :invoices => "./data/invoices.csv",
+      :items         => "./data/items.csv",
+      :merchants     => "./data/merchants.csv",
+      :invoices      => "./data/invoices.csv",
       :invoice_items => "./data/invoice_items.csv",
-      :transactions => "./data/transactions.csv",
-      :customers => "./data/customers.csv"
+      :transactions  => "./data/transactions.csv",
+      :customers     => "./data/customers.csv"
       })
   end
 
@@ -37,7 +37,6 @@ class InvoiceItemRepositoryTest < Minitest::Test
     customers = customer_repo.find_all_by_first_name("Pa")
     assert_equal 11, customers.count
   end
-
 
   def test_can_find_all_by_last_name
     customer_repo = @se.customers

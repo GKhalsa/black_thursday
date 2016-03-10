@@ -50,7 +50,6 @@ class SalesAnalystTest < Minitest::Test
     assert_equal 350.29, sa.average_average_price_per_merchant
   end
 
-meta refactor:true
   def test_golden_items
     assert_equal 5, sa.golden_items.count
   end
