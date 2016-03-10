@@ -26,4 +26,12 @@ class Customer
     end
   end
 
+  def purchasing_days
+    day_hash = Hash.new(0)
+    invoices.each do |invoice|
+      day_hash[invoice.created_at.strftime("%A")] += 1
+    end
+    day_hash
+  end
+
 end
